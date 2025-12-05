@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prüfung B1 - German Quiz Master</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar fade-in">
+    <a href="home.html" class="logo">
+      <i class="fas fa-flag" style="color: var(--primary-color); margin-right: 10px;"></i>
+      German Quiz
+    </a>
+    <div style="display: flex; gap: 15px;">
+      <a href="home.html" class="btn btn-secondary" style="padding: 8px 20px; font-size: 0.9rem;">
+        <i class="fas fa-home" style="margin-right: 8px;"></i> Startseite
+      </a>
+      <button onclick="logout()" class="btn btn-danger" style="padding: 8px 20px; font-size: 0.9rem;">
+        <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Abmelden
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="dashboard-container fade-in" style="animation-delay: 0.2s;">
+
+    <!-- Lesen Teil 1 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-book-open" style="color: var(--primary-color);"></i>
+        Lesen Teil 1
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/204.html">PETRA/JENNIFER</a>
+        <a class="quiz-btn" href="/quiz/206.html">EVA/IRIS</a>
+        <a class="quiz-btn" href="/quiz/215.html">SOPHIE/ANDREAS2</a>
+        <a class="quiz-btn" href="/quiz/219.html">NADJA/CLAUDIA</a>
+        <a class="quiz-btn" href="/quiz/221.html">NICOLE</a>
+        <a class="quiz-btn" href="/quiz/223.html">ANDREAS</a>
+        <a class="quiz-btn" href="/quiz/226.html">ANNIKA1</a>
+        <a class="quiz-btn" href="/quiz/227.html">ANNIKA2/SONJA<br>CORINA</a>
+        <a class="quiz-btn" href="/quiz/228.html">CAROLINA/ALICIA</a>
+        <a class="quiz-btn" href="/quiz/230.html">VERA</a>
+        <a class="quiz-btn" href="/quiz/232.html">THOMAS</a>
+        <a class="quiz-btn" href="/quiz/234.html">TAMARA/JAKOB<br>PAUL</a>
+        <a class="quiz-btn" href="/quiz/235.html">JAN</a>
+        <a class="quiz-btn" href="/quiz/237.html">VIKTOR</a>
+        <a class="quiz-btn" href="/quiz/240.html">ALEX & CORA</a>
+        <a class="quiz-btn" href="/quiz/242.html">RITA</a>
+        <a class="quiz-btn" href="/quiz/244.html">MIROSLAV</a>
+        <a class="quiz-btn" href="/quiz/246.html">KARLA</a>
+        <a class="quiz-btn" href="/quiz/247.html">MORITZ</a>
+      </div>
+    </div>
+
+    <!-- Lesen Teil 2 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-book-reader" style="color: var(--secondary-color);"></i>
+        Lesen Teil 2
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/205.html">Petra & ALICIA</a>
+        <a class="quiz-btn" href="/quiz/207.html">EVA1</a>
+        <a class="quiz-btn" href="/quiz/208.html">IRIS</a>
+        <a class="quiz-btn" href="/quiz/216.html">SOPHIE</a>
+        <a class="quiz-btn" href="/quiz/220.html">NADJA & CLAUDIA</a>
+        <a class="quiz-btn" href="/quiz/222.html">NICOLE</a>
+        <a class="quiz-btn" href="/quiz/224.html">ANDREAS</a>
+        <a class="quiz-btn" href="/quiz/225.html">ANDREAS2 & CORINA<br>ANNIKA(1&2)</a>
+        <a class="quiz-btn" href="/quiz/229.html">CAROLINA/VERA</a>
+        <a class="quiz-btn" href="/quiz/231.html">JENNIFER & TAMARA<br>JAKOB/PAUL</a>
+        <a class="quiz-btn" href="/quiz/233.html">THOMAS</a>
+        <a class="quiz-btn" href="/quiz/236.html">JAN</a>
+        <a class="quiz-btn" href="/quiz/238.html">VIKTOR</a>
+        <a class="quiz-btn" href="/quiz/239.html">SONJA</a>
+        <a class="quiz-btn" href="/quiz/241.html">ALEX & CORA</a>
+        <a class="quiz-btn" href="/quiz/243.html">RITA</a>
+        <a class="quiz-btn" href="/quiz/245.html">MIROSLAV & KARLA</a>
+        <a class="quiz-btn" href="/quiz/248.html">MORITZ</a>
+        <a class="quiz-btn" href="/quiz/249.html">MARA</a>
+      </div>
+    </div>
+
+    <!-- Lesen Teil 3 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-newspaper" style="color: var(--primary-color);"></i>
+        Lesen Teil 3
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/201.html">Petra</a>
+        <a class="quiz-btn" href="/quiz/203.html">EVA1</a>
+        <a class="quiz-btn" href="/quiz/202.html">IRIS</a>
+        <a class="quiz-btn" href="/quiz/217.html">SOPHIE</a>
+        <a class="quiz-btn" href="/quiz/218.html">NADJA & CLAUDIA</a>
+        <a class="quiz-btn" href="/quiz/286.html">ANDREAS1</a>
+        <a class="quiz-btn" href="/quiz/287.html">ANDREAS2</a>
+        <a class="quiz-btn" href="/quiz/288.html">CAROLINA</a>
+      </div>
+    </div>
+
+    <!-- Sprachbausteine Teil 1 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-puzzle-piece" style="color: var(--secondary-color);"></i>
+        Sprachbausteine Teil 1
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/209.html">PETRA/NADJA2<br>CLAUDIA</a>
+        <a class="quiz-btn" href="/quiz/211.html">EVA</a>
+        <a class="quiz-btn" href="/quiz/213.html">IRIS</a>
+        <a class="quiz-btn" href="/quiz/250.html">SOPHIE</a>
+        <a class="quiz-btn" href="/quiz/251.html">NICOLE</a>
+        <a class="quiz-btn" href="/quiz/254.html">ANDREAS</a>
+        <a class="quiz-btn" href="/quiz/257.html">ANDREAS2/VIKTOR<br>SONJA</a>
+        <a class="quiz-btn" href="/quiz/259.html">ANNIKA1</a>
+        <a class="quiz-btn" href="/quiz/261.html">ANNIKA2/JAN<br>CORINA</a>
+        <a class="quiz-btn" href="/quiz/262.html">CAROLINA/RITA</a>
+        <a class="quiz-btn" href="/quiz/264.html">VERA/PAUL</a>
+        <a class="quiz-btn" href="/quiz/266.html">THOMAS/ANNA</a>
+        <a class="quiz-btn" href="/quiz/268.html">JENNIFER</a>
+        <a class="quiz-btn" href="/quiz/269.html">TAMARA/JAKOB</a>
+        <a class="quiz-btn" href="/quiz/273.html">ALEX & CORA</a>
+        <a class="quiz-btn" href="/quiz/278.html">MIROSLAV</a>
+        <a class="quiz-btn" href="/quiz/280.html">KARLA</a>
+        <a class="quiz-btn" href="/quiz/282.html">MORITZ</a>
+        <a class="quiz-btn" href="/quiz/283.html">ALICIA</a>
+      </div>
+    </div>
+
+    <!-- Sprachbausteine Teil 2 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-shapes" style="color: var(--primary-color);"></i>
+        Sprachbausteine Teil 2
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/210.html">PETRA/ALICIA</a>
+        <a class="quiz-btn" href="/quiz/212.html">EVA</a>
+        <a class="quiz-btn" href="/quiz/214.html">IRIS</a>
+        <a class="quiz-btn" href="/quiz/253.html">SOPHIE</a>
+        <a class="quiz-btn" href="/quiz/252.html">NICOLE</a>
+        <a class="quiz-btn" href="/quiz/255.html">NADJA/CLAUDIA</a>
+        <a class="quiz-btn" href="/quiz/256.html">ANDREAS</a>
+        <a class="quiz-btn" href="/quiz/258.html">ANDREAS2/JAN</a>
+        <a class="quiz-btn" href="/quiz/260.html">ANNIKA1&2</a>
+        <a class="quiz-btn" href="/quiz/263.html">CAROLINA/CORINA</a>
+        <a class="quiz-btn" href="/quiz/265.html">VERA</a>
+        <a class="quiz-btn" href="/quiz/267.html">THOMAS/ANNA<br>JENNIFER</a>
+        <a class="quiz-btn" href="/quiz/270.html">TAMARA/JAKOB<br>SONJA</a>
+        <a class="quiz-btn" href="/quiz/272.html">VIKTOR</a>
+        <a class="quiz-btn" href="/quiz/274.html">ALEX & CORA</a>
+        <a class="quiz-btn" href="/quiz/276.html">PAUL</a>
+        <a class="quiz-btn" href="/quiz/277.html">RITA</a>
+        <a class="quiz-btn" href="/quiz/279.html">MIROSLAV</a>
+        <a class="quiz-btn" href="/quiz/281.html">KARLA/MORITZ</a>
+        <a class="quiz-btn" href="/quiz/284.html">JAKOB2</a>
+      </div>
+    </div>
+
+    <!-- Hören -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-headphones" style="color: var(--secondary-color);"></i>
+        Hören
+      </div>
+      <div class="quiz-grid">
+        <a class="quiz-btn" href="/quiz/271.html">Teil 1</a>
+        <a class="quiz-btn" href="/quiz/285.html">Teil 2</a>
+        <a class="quiz-btn" href="/quiz/275.html">Teil 3</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Warning Box -->
+  <div id="warningBox">
+    Inaktivität erkannt! Automatische Abmeldung in <span id="countdown">30</span> Sekunden.
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p style="opacity: 0.6;">&copy; 2026 German Quiz Master</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Logout function using Auth.js or direct fetch if Auth.js isn't fully integrated here yet
+    // But since we are redesigning, let's use the existing logic but cleaner.
+
+    function logout() {
+      fetch("/logout", { method: "POST" })
+        .then(() => window.location.href = "/");
+    }
+
+    let pingTimeout;
+    let logoutTimer;
+    let warningTimer;
+    let countdownTimer;
+    let lastPing = 0;
+
+    const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutes
+    const WARNING_BEFORE_LOGOUT = 30 * 1000; // 30 seconds
+    const warningBox = document.getElementById("warningBox");
+    const countdownEl = document.getElementById("countdown");
+
+    function sendPing() {
+      const now = Date.now();
+      if (now - lastPing < 10000) return;
+      lastPing = now;
+      fetch("/ping").catch(() => { });
+    }
+
+    function resetTimers() {
+      clearTimeout(pingTimeout);
+      clearTimeout(logoutTimer);
+      clearTimeout(warningTimer);
+      clearInterval(countdownTimer);
+
+      warningBox.style.display = "none";
+
+      sendPing();
+      pingTimeout = setTimeout(sendPing, 60 * 1000);
+
+      // Show warning 30s before logout
+      warningTimer = setTimeout(() => {
+        let remaining = 30;
+        warningBox.style.display = "block";
+        countdownEl.textContent = remaining;
+
+        countdownTimer = setInterval(() => {
+          remaining--;
+          countdownEl.textContent = remaining;
+          if (remaining <= 0) {
+            clearInterval(countdownTimer);
+          }
+        }, 1000);
+      }, INACTIVITY_LIMIT - WARNING_BEFORE_LOGOUT);
+
+      // Auto logout
+      logoutTimer = setTimeout(() => {
+        logout();
+      }, INACTIVITY_LIMIT);
+    }
+
+    // Events
+    ["mousemove", "keydown", "scroll", "click", "touchstart"].forEach(evt => {
+      document.addEventListener(evt, resetTimers);
+    });
+
+    window.addEventListener("pageshow", sendPing);
+    window.addEventListener("beforeunload", sendPing);
+
+    resetTimers();
+  </script>
+</body>
+
+</html>

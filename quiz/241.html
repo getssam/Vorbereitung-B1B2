@@ -1,0 +1,186 @@
+﻿<html lang="de"><head>
+<meta charset="utf-8"/>
+<title>Alex &amp; Cora teil: 2</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e5e5e5; background-image: radial-gradient(at 0% 0%, hsla(328, 76%, 65%, 0.7) 0px, transparent 50%), radial-gradient(at 0% 40%, hsla(15, 88%, 65%, 0.5) 0px, transparent 50%); background-attachment: fixed;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .text-section {
+      flex: 1;
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .quiz-section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .question-card {
+      background: #e9f0f7;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+    }
+
+    .question-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .question-card label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .correct {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+}
+
+.incorrect {
+  background-color: #f8d7da;
+  border: 1px solid #dc3545;
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+<!-- Left: Text -->
+<div class="text-section">
+<h1>Haustiere in Deutschland</h1>
+<p>Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt. Markus Kleinoth aus der Freizeitredaktion hat sich mit diesem Thema beschäftigt.</p>
+<p>In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt, denn davon leben 14 Millionen in Deutschland. Und das, obwohl Deutschland als Land der Hundefans gilt. Insgesamt gibt es aber etwa 10 Millionen Hunde. </p>
+<p>Für den Hund ist manchen Menschen nichts zu teuer. Eine Hundebesitzerin, die überdurchschnittlich viel Geld für ihren Liebling ausgibt, ist Bettina Schröther: Morgens vor der Arbeit bringe ich meinen Hund in eine sehr gute Tagesbetreuung, in der es auch eine Hundeschule gibt. Aber wenn ich frei habe, sind wir immer zusammen, auch im Urlaub. Ich war mit ihm sogar schon in einem Wellnesshotel für Hunde."</p>
+<p>Der Hundeexperte Marius Klotz kennt solche Fälle, sieht das aber kritisch: „Viele Besitzer meinen es gut und tun zu viel für ihre Hunde. Hier sollte man aufpassen. Für einen Hund ist es sehr wichtig, eine gute Erziehung zu bekommen. Wichtig sind klare Regeln, die er verstehen kann. Außerdem braucht er viel Bewegung und unbedingt passendes Futter. Frisches Futter ist nicht unbedingt das beste, da sollte man sich gut informieren, am besten Fachleute fragen."</p>
+<p>Viele Menschen sehen ihre Katzen und Hunde als Teil der Familie. So auch Ellie Herfried, Hunde- besitzerin aus Erfurt: Unsere Familie feiert jedes Jahr mit unserem kleinen Schatz Geburtstag Er bekommt einen Geburtstagshundekuchen, natürlich mit Kerzen, und auch ein Geschenk. Dieses Jahr haben wir außerdem seine Hundefreunde eingeladen."</p>
+<p>Auch in einigen Seniorenheimen sind mittlerweile Tiere erlaubt. Sandra Bärenweger ist Altenpflegerin in Hamburg: „Bei uns im Haus haben einige Seniorenbeinen Hund oder eine Katze.Dadurch haben sie eine Aufgabe, denn sie müssen sich ja um ihr Tier kümmern, es füttern, oder mit ihm rausgehen wenn er ein Hund ist. So haben sie jeden Tag eine sinnvolle Beschäftigung. Das tut den älteren Menschen gut; viele bleiben dadurch fit."</p>
+<p>Der tägliche Spaziergang mit dem Hund oder das Spielen mit der Katze bietet vielen Haustier besitzern Ruhe und Entspannung eine kleine Erholung vom Alltag. Das bestätigen auch Fachleute: Haustiere können gerade bei Stress für viele Menschen ein guter Ausgleich sein. Die tägliche Beschäftigung mit seinem Haustier wie beispielsweise das Spazieren mit dem Hund und die Zuneigung, die man von ihm bekommt, spielen dabei eine wichtige Rolle." Das Haustier ist dabei auch viel mehr als ein Hobby, da es ein Lebewesen ist, das schnell zum Familienmitglied wird und das Leben bereichert.</p>
+</div>
+<!-- Right: Quiz -->
+<div class="quiz-section">
+<form id="quizForm">
+<div class="question-card">
+<h3>1. Bettina Schröther ...   </h3>
+<label><input name="q1" type="radio" value="a"/> lässt ihren Hund in einer Hundeschule erziehen.</label>
+<label><input name="q1" type="radio" value="b"/> macht mit ihrem Hund regelmäßig Wellnessurlaube.</label>
+<label><input name="q1" type="radio" value="c"/> verbringt die ganze Freizeit mit ihrem Hund.</label>
+</div>
+<div class="question-card">
+<h3>2. Nach Meinung von Hundeexperte Marius Klotz sollte man </h3>
+<label><input name="q2" type="radio" value="a"/> die Regeln bei der Hundeerziehung beachten.</label>
+<label><input name="q2" type="radio" value="b"/> seinen Hund immer gut behandeln.</label>
+<label><input name="q2" type="radio" value="c"/> sich zur Ernährung des Tiers beraten lassen.</label>
+</div>
+<div class="question-card">
+<h3>3. Die Hundebesitzerin Elli Herfeld  </h3>
+<label><input name="q3" type="radio" value="a"/> backt ihrem Hund zum Geburtstag einen Kuchen.</label>
+<label><input name="q3" type="radio" value="b"/> feiert ihren Geburtstag immer mit ihrem Hund.</label>
+<label><input name="q3" type="radio" value="c"/> sieht ihren Hund als festes Familienmitglied.</label>
+</div>
+<div class="question-card">
+<h3>4. In Seniorenheimen gibt es oft Tiere, damit  </h3>
+<label><input name="q4" type="radio" value="a"/> die Senioren etwas tun, was gut für sie ist.</label>
+<label><input name="q4" type="radio" value="b"/> die Senioren mehr spazieren gehen.</label>
+<label><input name="q4" type="radio" value="c"/> sie auf die älteren Menschen aufpassen.</label>
+</div>
+<div class="question-card">
+<h3>5.  Fachleute meinen, dass </h3>
+<label><input name="q5" type="radio" value="a"/> ein Haustier ein sinnvolles Hobby ist.</label>
+<label><input name="q5" type="radio" value="b"/> man mit seinem Hund täglich spazieren gehen sollte.</label>
+<label><input name="q5" type="radio" value="c"/> man sich durch sein Haustier erholen kann.</label>
+</div>
+<button onclick="checkAnswers()" type="button">Antworten prüfen</button>
+<div class="result" id="result"></div>
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+<a href="../index1.html" style="text-decoration: none;">
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+                Zurück zur Startseite
+              </div>
+</a>
+</div>
+</form>
+</div>
+</div>
+<script>
+    function checkAnswers() {
+      const answers = {
+        q1: "c",
+        q2: "c",
+        q3: "c",
+        q4: "a",
+        q5: "c"
+      };
+  
+      let score = 0;
+      let total = Object.keys(answers).length;
+  
+      for (let q in answers) {
+        const correct = answers[q];
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        const questionCard = document.querySelector(`[name="${q}"]`).closest(".question-card");
+  
+        // Remove previous styles
+        questionCard.classList.remove("correct", "incorrect");
+  
+        if (selected) {
+          if (selected.value === correct) {
+            score++;
+            questionCard.classList.add("correct");
+          } else {
+            questionCard.classList.add("incorrect");
+          }
+        } else {
+          questionCard.classList.add("incorrect");
+        }
+  
+        // Highlight the correct answer in green
+        const allOptions = document.querySelectorAll(`input[name="${q}"]`);
+        allOptions.forEach(opt => {
+          if (opt.value === correct) {
+            opt.parentElement.style.fontWeight = "bold";
+            opt.parentElement.style.color = "green";
+          }
+        });
+      }
+  
+      document.getElementById("result").innerText =
+        `Du hast ${score} von ${total} Fragen richtig beantwortet.`;
+        
+    }
+  </script>
+
+</body></html>

@@ -1,0 +1,185 @@
+﻿<html lang="de"><head>
+<meta charset="utf-8"/>
+<title>Moritz teil: 2</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e5e5e5; background-image: radial-gradient(at 0% 0%, hsla(328, 76%, 65%, 0.7) 0px, transparent 50%), radial-gradient(at 0% 40%, hsla(15, 88%, 65%, 0.5) 0px, transparent 50%); background-attachment: fixed;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .text-section {
+      flex: 1;
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .quiz-section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .question-card {
+      background: #e9f0f7;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+    }
+
+    .question-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .question-card label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .correct {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+}
+
+.incorrect {
+  background-color: #f8d7da;
+  border: 1px solid #dc3545;
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+<!-- Left: Text -->
+<div class="text-section">
+<h1>Ein Leben auf Sumatra</h1>
+<p>Der Abend, an dem Svenja Peters ihr Herz verlor, war ihr erster auf der Insel. Sie hatte gar nicht geplant, nach Sumatra zu reisen. Aber dann hatte sie in Thailand anderen Reisenden von dem großen und traumhaft gelegenen See erzählt. Und sie war dann einfach nach Indonesien geflogen. Für den Mann, den die damals 26-Jährige auf Sumatra traf, gab sie ihre geplante Karriere als Anwältin auf.</p>
+<p>Die Reise sollte eine kurze Pause zwischen Uni und Job sein. Doch zurück in Deutschland packte sie ihre Sachen in Kisten und machte sich mit ihnen wieder auf den Weg zurück nach Sumatra.</p>
+<p>Meine Eltern machten sich damals große Sorgen, dass ich meine Fachkenntnisse nicht nutze, sagt Svenja Peters., Aber als ich 18 wurde, hatten sie mir gesagt: Du stehst jetzt auf eigenen Füßen! Und daran erinnerte ich sie. Bei ihren jährlichen Besuchen sehen sie auch, "wie gut es mir hier geht, Sie selbst haben keine Sekunde an ihrer Entscheidung gezweifelt", sagt sie. Und es sind viele Sekunden seit damals vergangen. Mehr als 800 Millionen, um genau zu sein. Svenja Peters lebt seit 26 Jahren auf Sumatra.</p>
+<p>Sie hat den Mann geheiratet, in den sie sich auf ihrer Reise verliebte, und ist mit ihm seit 26 Jahren zusammen. Die beiden besitzen ein kleines Hotel mit 36 Zimmern und haben drei Kinder. Zwei leben gerade in Deutschland. Die Tochter studiert Tourismus und der Sohn macht eine Ausbildung zum Koch.</p>
+<p>Svenja Peters ist überzeugt, dass sie wieder zurückkommen werden.</p>
+<p>Ihr Start in die Selbstständigkeit war ein vegetarisches Restaurant. Mit den ersten Einnahmen kaufte sie ihr erstes kleines Haus mit zwei Gästezimmern. Nach und nach kaufte sie weitere Häuser. Heute sagt sie: „Ich verdiene so viel wie eine deutsche Anwältin.</p>
+</div>
+<!-- Right: Quiz -->
+<div class="quiz-section">
+<form id="quizForm">
+<div class="question-card">
+<h3>1. Svenja Peters blieb auf Sumatra, weil   </h3>
+<label><input name="q1" type="radio" value="a"/> ihr Thailand nicht gefiel.</label>
+<label><input name="q1" type="radio" value="b"/> sie dort als Anwältin arbeiten konnte.</label>
+<label><input name="q1" type="radio" value="c"/> sie sich verliebte.</label>
+</div>
+<div class="question-card">
+<h3>2. Nach ihrer Rückkehr nach Deutschland </h3>
+<label><input name="q2" type="radio" value="a"/> organisierte Svenja ihren Umzug.</label>
+<label><input name="q2" type="radio" value="b"/> setzte Svenja ihr Studium fort.</label>
+<label><input name="q2" type="radio" value="c"/> suchte Svenja eine Stelle als Anwältin.</label>
+</div>
+<div class="question-card">
+<h3>3. Ihre Eltern hatten Angst, dass  </h3>
+<label><input name="q3" type="radio" value="a"/> sie Svenja nicht wiedersehen würden.</label>
+<label><input name="q3" type="radio" value="b"/> Svenja nicht selbstständig sein würde.</label>
+<label><input name="q3" type="radio" value="c"/> Svenjas Studium umsonst war.</label>
+</div>
+<div class="question-card">
+<h3>4. Svenja und ihr Mann   </h3>
+<label><input name="q4" type="radio" value="a"/> führen ein Hotel mit 36 Zimmern.</label>
+<label><input name="q4" type="radio" value="b"/> haben zwei Kinder.</label>
+<label><input name="q4" type="radio" value="c"/> sind seit 36 Jahren ein Paar.</label>
+</div>
+<div class="question-card">
+<h3>5.  In Seminaren sollen die Teilnehmer lernen, </h3>
+<label><input name="q5" type="radio" value="a"/> direkt das Hotel.</label>
+<label><input name="q5" type="radio" value="b"/> ein Büro als Anwältin.</label>
+<label><input name="q5" type="radio" value="c"/> zuerst ein Restaurant.</label>
+</div>
+<button onclick="checkAnswers()" type="button">Antworten prüfen</button>
+<div class="result" id="result"></div>
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+<a href="../index1.html" style="text-decoration: none;">
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+                Zurück zur Startseite
+              </div>
+</a>
+</div>
+</form>
+</div>
+</div>
+<script>
+    function checkAnswers() {
+      const answers = {
+        q1: "c",
+        q2: "a",
+        q3: "c",
+        q4: "a",
+        q5: "c"
+      };
+  
+      let score = 0;
+      let total = Object.keys(answers).length;
+  
+      for (let q in answers) {
+        const correct = answers[q];
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        const questionCard = document.querySelector(`[name="${q}"]`).closest(".question-card");
+  
+        // Remove previous styles
+        questionCard.classList.remove("correct", "incorrect");
+  
+        if (selected) {
+          if (selected.value === correct) {
+            score++;
+            questionCard.classList.add("correct");
+          } else {
+            questionCard.classList.add("incorrect");
+          }
+        } else {
+          questionCard.classList.add("incorrect");
+        }
+  
+        // Highlight the correct answer in green
+        const allOptions = document.querySelectorAll(`input[name="${q}"]`);
+        allOptions.forEach(opt => {
+          if (opt.value === correct) {
+            opt.parentElement.style.fontWeight = "bold";
+            opt.parentElement.style.color = "green";
+          }
+        });
+      }
+  
+      document.getElementById("result").innerText =
+        `Du hast ${score} von ${total} Fragen richtig beantwortet.`;
+        
+    }
+  </script>
+
+</body></html>

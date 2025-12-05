@@ -1,0 +1,549 @@
+:root {
+    /* German Flag Palette - Professional Light Theme */
+    --primary-color: #E30613;
+    /* German Red */
+    --primary-hover: #B9050F;
+    --secondary-color: #FFCC00;
+    /* German Gold */
+    --secondary-hover: #E6B800;
+
+    --dark-color: #1E293B;
+    /* Slate 800 */
+    --light-color: #F1F5F9;
+    /* Slate 100 */
+
+    /* Functional Colors */
+    --bg-color: #FFFFFF;
+    /* Pure White */
+    --text-color: #334155;
+    /* Slate 700 */
+    --text-light: #64748B;
+    /* Slate 500 */
+
+    /* Cards */
+    --card-bg: #FFFFFF;
+    --glass-border: 1px solid #E2E8F0;
+    /* Slate 200 */
+
+    /* Modern Shapes */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 9999px;
+
+    /* Shadows (Clean & Soft) */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 0 transparent;
+    /* Removed glow for professional look */
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #F8FAFC;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    /* Blurred FIFA Colors (German Flag) Background */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 204, 0, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(227, 6, 19, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.05) 0%, transparent 60%);
+    background-attachment: fixed;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(227, 6, 19, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover));
+    color: var(--dark-color);
+    box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+/* --- Cards --- */
+.card,
+.level-card,
+.quiz-btn {
+    background: var(--card-bg);
+    border: var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Fix for hover jitter: extend hit area */
+.level-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -20px;
+    height: 20px;
+    z-index: -1;
+}
+
+.card:hover,
+.level-card:hover,
+.quiz-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #CBD5E1;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background: rgba(255, 255, 255, 0.85);
+    /* Increased transparency */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 30px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #E2E8F0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, var(--dark-color), var(--primary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+}
+
+/* --- Typography --- */
+h1,
+h2,
+h3 {
+    color: var(--dark-color);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* --- Inputs --- */
+input {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #e2e8f0;
+    background: white;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(227, 6, 19, 0.1);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* --- Main Layout --- */
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    max-width: 1400px;
+    margin: 40px auto 80px;
+    padding: 0 40px;
+    align-items: center;
+}
+
+/* --- Welcome Column (Left) --- */
+.welcome-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    transform: translateY(-50px);
+    /* Move text up ~10% */
+}
+
+.welcome-content {
+    max-width: 500px;
+}
+
+.welcome-title {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    line-height: 1.1;
+}
+
+.welcome-description {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+
+.welcome-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.feature-item i {
+    color: #E30613;
+    /* Red checkmarks */
+    font-size: 1.5rem;
+}
+
+/* --- Exam Cards Column (Right) --- */
+.exam-cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exam-cards-column .level-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    min-height: 180px;
+    background: white;
+    /* Clean white background */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.exam-cards-column .level-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.exam-cards-column .level-title {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.level-desc {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: var(--text-light);
+}
+
+.level-badge {
+    width: 60px;
+    height: 60px;
+    background: var(--light-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 auto 15px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* B1 Teal Theme */
+.exam-cards-column .level-card:first-child .level-badge {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    /* Cyan/Teal */
+    color: white;
+}
+
+.exam-cards-column .level-card:first-child .level-title {
+    color: #0891b2;
+}
+
+.exam-cards-column .level-card:first-child .btn {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: white;
+    border: none;
+}
+
+.exam-cards-column .level-card:first-child .btn:hover {
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(6, 182, 212, 0.3);
+}
+
+/* B2 Purple/Pink Theme */
+.exam-cards-column .level-card:last-child .level-badge {
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    /* Violet to Fuchsia */
+    color: white;
+}
+
+.exam-cards-column .level-card:last-child .level-title {
+    color: #8b5cf6;
+}
+
+.exam-cards-column .level-card:last-child .btn {
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    color: white;
+    border: none;
+}
+
+.exam-cards-column .level-card:last-child .btn:hover {
+    background: linear-gradient(135deg, #7c3aed, #c026d3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
+}
+
+/* --- Contact Section (Card Style) --- */
+.contact-section {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--dark-color);
+    padding: 10px 20px;
+    background: var(--light-color);
+    border-radius: var(--radius-pill);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    background: white;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--dark-color);
+    color: white;
+    margin-top: auto;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .two-column-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin: 60px auto 60px;
+        padding: 0 20px;
+    }
+
+    .welcome-title {
+        font-size: 2.5rem;
+    }
+
+    .welcome-description {
+        font-size: 1rem;
+    }
+
+    .exam-cards-column .level-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* --- Dashboard / Exam Pages --- */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.section-card {
+    background: rgba(255, 255, 255, 0.9);
+    /* Increased transparency */
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 30px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Flash Card Grid */
+.quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+/* Flash Card Button - 2026 Premium Style */
+.quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-md);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 90px;
+    box-shadow: var(--shadow-sm);
+    line-height: 1.4;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Subtle gradient accent at the bottom */
+.quiz-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.quiz-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow:
+        0 15px 30px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(227, 6, 19, 0.05);
+    /* Subtle border glow */
+    border-color: white;
+    color: var(--dark-color);
+}
+
+.quiz-btn:hover::after {
+    opacity: 1;
+}
+
+/* Active/Click State */
+.quiz-btn:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: var(--shadow-md);
+}
+
+/* Warning Box */
+#warningBox {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ef4444;
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-lg);
+    font-weight: 600;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}

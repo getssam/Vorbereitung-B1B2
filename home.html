@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>German Quiz Master - Startseite</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Floating Navbar -->
+  <nav class="navbar fade-in">
+    <a href="home.html" class="logo">
+      <i class="fas fa-flag" style="color: var(--primary-color); margin-right: 10px;"></i>
+      Deutsch Pru
+    </a>
+    <div id="auth-buttons">
+      <!-- Populated by JS -->
+    </div>
+  </nav>
+
+  <!-- Main Content: Two Column Layout -->
+  <div class="two-column-layout fade-in">
+    <!-- Left Column: Welcome Text -->
+    <div class="welcome-column">
+      <div class="welcome-content">
+        <h1 class="welcome-title">Deutsch Meistern</h1>
+        <p class="welcome-description">Die moderne Plattform für Ihre B1 und B2 Prüfungsvorbereitung. Interaktiv,
+          effektiv und direkt auf den Punkt.</p>
+        <div class="welcome-features">
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Umfassende Prüfungsvorbereitung</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Interaktive Übungen</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Sofortige Ergebnisse</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Exam Cards -->
+    <div class="exam-cards-column">
+      <!-- B1 Card -->
+      <div class="level-card" onclick="Auth.requireExamAccess('B1')">
+        <div class="level-badge badge-b1">B1</div>
+        <div class="level-title">Prüfung B1</div>
+        <p class="level-desc">Mittelstufe Deutsch. Testen Sie Ihre Fähigkeiten in Lesen und Sprachbausteinen.</p>
+        <button class="btn">Starten B1</button>
+      </div>
+
+      <!-- B2 Card -->
+      <div class="level-card" onclick="Auth.requireExamAccess('B2')">
+        <div class="level-badge badge-b2">B2</div>
+        <div class="level-title">Prüfung B2</div>
+        <p class="level-desc">Fortgeschrittene Deutschkenntnisse. Anspruchsvolle Texte und Aufgaben.</p>
+        <button class="btn">Starten B2</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section fade-in" style="animation-delay: 0.4s;">
+    <h2>Wir sind für Sie da</h2>
+    <p style="color: var(--text-light);">Haben Sie Fragen? Kontaktieren Sie uns direkt.</p>
+
+    <div class="contact-grid">
+      <a href="https://chat.whatsapp.com/BBsrWhmwaGR0wc9UMGdbsp" class="contact-item" target="_blank">
+        <i class="fab fa-whatsapp" style="color: #25D366; font-size: 1.2rem;"></i>
+        <span style="font-weight: 600;">WhatsApp</span>
+      </a>
+      <a href="https://t.me/+MPh4lDdJDQpjY2Q8" class="contact-item" target="_blank">
+        <i class="fab fa-telegram" style="color: #0088cc; font-size: 1.2rem;"></i>
+        <span style="font-weight: 600;">Telegram</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div style="margin-bottom: 30px;">
+      <a href="#" style="color: white; margin: 0 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="color: white; margin: 0 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+      <a href="#" style="color: white; margin: 0 15px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p style="opacity: 0.6;">&copy; 2026 German Quiz Master. Made with <i class="fas fa-heart"
+        style="color: var(--primary-color);"></i> in Germany.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    (async function () {
+      const user = await Auth.getCurrentUser();
+      const authBtns = document.getElementById('auth-buttons');
+
+      if (user) {
+        authBtns.innerHTML = `
+          <span style="margin-right: 15px; font-weight: 600; color: var(--dark-color);">Hallo, ${user.name}</span>
+          <button onclick="Auth.logout()" class="btn btn-danger" style="padding: 8px 20px; font-size: 0.9rem;">Abmelden</button>
+      `;
+      } else {
+        authBtns.innerHTML = `
+          <a href="login.html" class="btn btn-primary" style="padding: 10px 24px; margin-right: 10px;">Anmelden</a>
+          <a href="register.html" class="btn" style="padding: 10px 24px; background: white; color: var(--primary-color); border: 1px solid var(--primary-color);">Registrieren</a>
+      `;
+      }
+    })();
+  </script>
+</body>
+
+</html>

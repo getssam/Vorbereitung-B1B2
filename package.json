@@ -1,0 +1,10 @@
+{
+    "name": "german-quiz-master-root",
+    "version": "1.0.0",
+    "description": "Root package to manage the project",
+    "scripts": {
+        "start": "cd backend && node server.js",
+        "dev": "cd backend && node server.js",
+        "install-backend": "cd backend && npm install"
+    }
+}

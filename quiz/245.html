@@ -1,0 +1,186 @@
+﻿<html lang="de"><head>
+<meta charset="utf-8"/>
+<title>Miroslav teil: 2</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e5e5e5; background-image: radial-gradient(at 0% 0%, hsla(328, 76%, 65%, 0.7) 0px, transparent 50%), radial-gradient(at 0% 40%, hsla(15, 88%, 65%, 0.5) 0px, transparent 50%); background-attachment: fixed;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .text-section {
+      flex: 1;
+      padding: 20px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .quiz-section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .question-card {
+      background: #e9f0f7;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+    }
+
+    .question-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .question-card label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .correct {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+}
+
+.incorrect {
+  background-color: #f8d7da;
+  border: 1px solid #dc3545;
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+<!-- Left: Text -->
+<div class="text-section">
+<h1>Mehr Platz und Schutz für Bienen</h1>
+<p>Seit einiger Zeit hört man immer wieder, dass Bienen vom Aussterben bedroht sind. Welche Folgen hat dies für die Menschheit und was wird dagegen unternommen?</p>
+<p>Bienen spielen eine sehr wichtige Rolle für unsere Umwelt. Weltweit stirbt seit Jahren ein großer Teil der Bienenbevölkerung. Warum so viele Bienen sterben, lässt sich nicht so einfach sagen. Hier spielen mehrere Faktoren eine Rolle, wie zum Beispiel der Gebrauch von Pestiziden in der Landwirtschaft, fehlende Wiesen und Grünflächen, Luftverschmutzung und Klimawandel.</p>
+<p>In den letzten Jahren sind vor allem in den Städten! verschiedene Aktionen ins Leben gerufen worden, um den Lebensraum von Bienen zu vergrößern. Schon heute finden Bienen in vielen Städten genug. Nahrung, weil immer mehr Menschen dafür sorgen “Bienen sind spannend”, sagt Sebastian Werner. “Man sieht sie nicht immer, sie sind oft im Verborgenen und haben etwas Geheimnisvolles" - “Die Biene ist für viele Menschen auch ein Symbol für Wildnis", sagt Thorsten Gottlieb. “Und es ist schön für uns Menschen, das zu erleben, Faszinierend, ihnen zuzuschauen, Bienen zu beobachten, stundenlang”, sagt Manfred Kessel.</p>
+<p>Manche Wissenschaftler sind der Überzeugung, dass die Menschheit ohne die Arbeit der Bienen keine vier Jahre überleben könne. Denn ohne Bienen würde ein Großteil unserer Nahrung wegfallen. Diese drei sind mit dem Thema vertraut, da sie das jährliche Frankfurter Bienenfestival vorbereiten. Gottlieb und Werner sind Gründer der Initiative und Kessel ist der Gastgeber und Leiter des Botanischen Gartens, wo das Festival stattfindet.</p>
+<p>Die Beschäftigung mit Bienen wirkt entspannend im stressigen Tempo des Alltags. Außerdem ist die Welt, wie sie ist. ohne Bienen gar nichts vorstellbar. Sie sorgen für die Verbreitung hunderttausender Pflanzen, die Mensch und Tiere zur Ernährung brauchen.</p>
+<p>In Frankfurt besteht seit vielen hundert Jahren eine Tradition der Bienenhaltung. Für Einsteiger gibt es ein großes Angebot an Kursen.<br/>
+        “Du brauchst Grundlagen und eine gute Ausbildung, sonst machst du einfach zu viele Fehler”, warnt Thorsten Gottlieb. “Du hast eine riesengroße Verantwortung”, fügt Sebastian Werner hinzu. “Du musst wissen, was du da tust - nicht nur, weil du für bis zu 60.000 Bienen in einem einzigen Volk zu sorgen hast. Alle Bienenvölker im Umkreis sind betroffen, wenn dein Volk krank ist."</p>
+</div>
+<!-- Right: Quiz -->
+<div class="quiz-section">
+<form id="quizForm">
+<div class="question-card">
+<h3>1. Das Bienensterben   </h3>
+<label><input name="q1" type="radio" value="a"/> ist ein noch ungelöstes Problem.</label>
+<label><input name="q1" type="radio" value="b"/> kann man nur in bestimmten Regionen beobachten.</label>
+<label><input name="q1" type="radio" value="c"/> lässt sich auf eine einzige Ursache zurückführen.</label>
+</div>
+<div class="question-card">
+<h3>2. In vielen Städten </h3>
+<label><input name="q2" type="radio" value="a"/> finden Bienen wenig Futter.</label>
+<label><input name="q2" type="radio" value="b"/> kann man keine Bienen mehr sehen.</label>
+<label><input name="q2" type="radio" value="c"/> schafft man mehr Platz für Bienen.</label>
+</div>
+<div class="question-card">
+<h3>3. Werner, Gottlieb und Kessel  </h3>
+<label><input name="q3" type="radio" value="a"/> arbeiten in einer Parkanlage in Frankfurt.</label>
+<label><input name="q3" type="radio" value="b"/> forschen über Bienen und ihren Lebensraum.</label>
+<label><input name="q3" type="radio" value="c"/> organisieren eine Veranstaltung über Bienen.</label>
+</div>
+<div class="question-card">
+<h3>4. Experten nehmen an, dass  </h3>
+<label><input name="q4" type="radio" value="a"/> es in vier Jahren keine Bienen mehr gibt.</label>
+<label><input name="q4" type="radio" value="b"/> man viele Lebensmittel ohne Bienen herstellen kann.</label>
+<label><input name="q4" type="radio" value="c"/> menschliches Leben ohne Bienen nicht möglich ist.</label>
+</div>
+<div class="question-card">
+<h3>5.  In Frankfurt gibt es schon lange Bienenhalter. </h3>
+<label><input name="q5" type="radio" value="a"/> schon lange Bienenhalter.</label>
+<label><input name="q5" type="radio" value="b"/> viele kranke Bienenvölker.</label>
+<label><input name="q5" type="radio" value="c"/> zurzeit 60 000 Bienen.</label>
+</div>
+<button onclick="checkAnswers()" type="button">Antworten prüfen</button>
+<div class="result" id="result"></div>
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+<a href="../index1.html" style="text-decoration: none;">
+<div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
+                Zurück zur Startseite
+              </div>
+</a>
+</div>
+</form>
+</div>
+</div>
+<script>
+    function checkAnswers() {
+      const answers = {
+        q1: "a",
+        q2: "c",
+        q3: "c",
+        q4: "c",
+        q5: "a"
+      };
+  
+      let score = 0;
+      let total = Object.keys(answers).length;
+  
+      for (let q in answers) {
+        const correct = answers[q];
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        const questionCard = document.querySelector(`[name="${q}"]`).closest(".question-card");
+  
+        // Remove previous styles
+        questionCard.classList.remove("correct", "incorrect");
+  
+        if (selected) {
+          if (selected.value === correct) {
+            score++;
+            questionCard.classList.add("correct");
+          } else {
+            questionCard.classList.add("incorrect");
+          }
+        } else {
+          questionCard.classList.add("incorrect");
+        }
+  
+        // Highlight the correct answer in green
+        const allOptions = document.querySelectorAll(`input[name="${q}"]`);
+        allOptions.forEach(opt => {
+          if (opt.value === correct) {
+            opt.parentElement.style.fontWeight = "bold";
+            opt.parentElement.style.color = "green";
+          }
+        });
+      }
+  
+      document.getElementById("result").innerText =
+        `Du hast ${score} von ${total} Fragen richtig beantwortet.`;
+        
+    }
+  </script>
+
+</body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrieren - German Quiz</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Page Specific Styles matching Home & Login */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* German Flag Accent Blob */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.15) 0%, rgba(227, 6, 19, 0.1) 40%, rgba(15, 23, 42, 0.05) 70%, transparent 100%);
+            z-index: -1;
+            filter: blur(60px);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 450px;
+            /* Slightly wider for register */
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .brand-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .input-wrapper input {
+            padding-left: 45px;
+            /* Space for icon */
+            transition: all 0.2s;
+        }
+
+        .input-wrapper input:focus+i {
+            color: var(--primary-color);
+        }
+
+        #errorMsg {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.9rem;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        #successMsg {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="brand-icon">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="brand-title">Konto erstellen</div>
+        <div class="brand-subtitle">Werden Sie Teil der German Quiz Community</div>
+
+        <form id="registerForm">
+            <div style="display: flex; gap: 15px;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Vorname</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name" required placeholder="Max">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Nachname</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="surname" required placeholder="Mustermann">
+                        <i class="fas fa-user-tag"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>E-Mail Adresse</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" required placeholder="name@beispiel.de">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Passwort</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" required placeholder="••••••••">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <div id="errorMsg"></div>
+            <div id="successMsg"></div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem;">
+                <i class="fas fa-check-circle" style="margin-right: 8px;"></i> Registrieren
+            </button>
+        </form>
+
+        <div class="security-badge">
+            <i class="fas fa-lock"></i> Ihre Daten sind sicher
+        </div>
+
+        <div class="footer-links">
+            <a href="login.html" style="font-weight: 600; color: var(--dark-color);">Bereits ein Konto? Anmelden</a><br>
+            <a href="home.html" style="opacity: 0.8;"><i class="fas fa-arrow-left"></i> Zurück zur Startseite</a>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            const btn = this.querySelector('button[type="submit"]');
+
+            // Loading state
+            const originalBtnContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wird registriert...';
+            btn.disabled = true;
+
+            const newUser = {
+                name: name,
+                surname: surname,
+                email: email,
+                password: password
+            };
+
+            const result = await Auth.register(newUser);
+
+            if (result.success) {
+                errorMsg.style.display = 'none';
+                successMsg.textContent = 'Registrierung erfolgreich! Bitte warten Sie auf die Freigabe durch den Administrator.';
+                successMsg.style.display = 'block';
+                document.getElementById('registerForm').reset();
+                btn.innerHTML = '<i class="fas fa-check"></i> Erledigt';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+            } else {
+                successMsg.style.display = 'none';
+                errorMsg.textContent = result.message;
+                errorMsg.style.display = 'block';
+                btn.innerHTML = originalBtnContent;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
