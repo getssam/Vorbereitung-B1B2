@@ -85,10 +85,11 @@ app.post('/api/register', (req, res) => {
 
     // New users are inactive by default
     const sql = `INSERT INTO users (name, surname, email, password, role, accessB1, accessB2, isActive, deviceLimit) 
-                 VALUES (?, ?, ?, ?, 'user', 0, 0, 0, 1)`;
+                 VALUES (?, ?, ?, ?, 'user', 1, 1, 1, 1)`;
 
     db.run(sql, [name, surname, email, passwordHash], function (err) {
         if (err) {
+            console.error('Registration Error:', err.message);
             return res.json({ success: false, message: 'E-Mail wird bereits verwendet.' });
         }
         res.json({ success: true, message: 'Registrierung erfolgreich.' });

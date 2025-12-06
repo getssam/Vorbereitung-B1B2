@@ -183,12 +183,8 @@ const Auth = {
         const user = await this.getCurrentUser();
         if (!user) return false;
 
-        if (examLevel === 'B1') {
-            return user.accessB1 === true;
-        } else if (examLevel === 'B2') {
-            return user.accessB2 === true;
-        }
-        return false;
+        // Grant access to everyone logged in
+        return true;
     },
 
     requireExamAccess: async function (examLevel) {
@@ -206,16 +202,7 @@ const Auth = {
             return;
         }
 
-        // REMOVED ACCESS CHECK - Open to all logged in users
-        /* 
-        const hasAccess = examLevel === 'B1' ? user.accessB1 : user.accessB2;
 
-        if (!hasAccess) {
-            alert(`Sie haben keinen Zugang zur Prüfung ${examLevel}. Bitte kontaktieren Sie den Administrator.`);
-            window.location.href = 'home.html';
-            return;
-        }
-        */
 
         // If user has access, redirect to the exam page ONLY if not already there
         const examPage = examLevel === 'B1' ? 'index1.html' : 'index2.html';

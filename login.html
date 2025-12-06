@@ -265,12 +265,7 @@
                         localStorage.removeItem('quiz_redirect_after_login');
                         localStorage.removeItem('quiz_requested_exam');
 
-                        if (await Auth.checkExamAccess(requestedExam)) {
-                            window.location.href = redirectPage;
-                        } else {
-                            alert('Sie haben keinen Zugang zur Prüfung ' + requestedExam + '. Bitte kontaktieren Sie den Administrator.');
-                            window.location.href = 'home.html';
-                        }
+                        window.location.href = redirectPage;
                     } else {
                         window.location.href = 'home.html';
                     }
