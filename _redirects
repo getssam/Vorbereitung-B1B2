@@ -1,2 +1,2 @@
-/
-/api/* https://YOUR_BACKEND_HOST/api/:splat 200
+# Netlify Redirects
+/api/*  https://YOUR_BACKEND_URL_HERE/api/:splat  200

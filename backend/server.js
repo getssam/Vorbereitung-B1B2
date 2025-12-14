@@ -10,16 +10,18 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.set('trust proxy', 1);
 
 // Middleware
-app.use(cors());
+const allowedOrigin = process.env.CORS_ORIGIN || 'https://unezac.github.io';
+app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET || 'fallback-secret-key', // Use .env or fallback
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+    cookie: { maxAge: 24 * 60 * 60 * 1000, sameSite: (process.env.NODE_ENV === 'production' ? 'none' : 'lax'), secure: (process.env.NODE_ENV === 'production') }
 }));
 
 // Redirect root to login

@@ -15,6 +15,12 @@ const API = {
     PING: '/ping'
 };
 
+const BACKEND_URL = window.location.hostname.endsWith('github.io') ? 'https://YOUR-BACKEND.up.railway.app' : '';
+const apiFetch = (path, options = {}) => {
+    const url = BACKEND_URL ? `${BACKEND_URL}${path}` : path;
+    return fetch(url, { credentials: 'include', ...options });
+};
+
 const Auth = {
     init: function () {
         this.checkSession();
@@ -25,7 +31,7 @@ const Auth = {
 
     getUsers: async function () {
         try {
-            const response = await fetch(API.USERS);
+            const response = await apiFetch(API.USERS);
             if (!response.ok) throw new Error('Network response was not ok');
             const users = await response.json();
             return users;
@@ -37,7 +43,7 @@ const Auth = {
 
     register: async function (user) {
         try {
-            const response = await fetch(API.REGISTER, {
+            const response = await apiFetch(API.REGISTER, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
@@ -51,7 +57,7 @@ const Auth = {
 
     addUser: async function (user) {
         try {
-            const response = await fetch(API.USERS, {
+            const response = await apiFetch(API.USERS, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
@@ -65,7 +71,7 @@ const Auth = {
 
     deleteUser: async function (email) {
         try {
-            const response = await fetch(`${API.USERS}/${email}`, {
+            const response = await apiFetch(`${API.USERS}/${email}`, {
                 method: 'DELETE'
             });
             return await response.json();
@@ -77,7 +83,7 @@ const Auth = {
 
     updateUserStatus: async function (email, status) {
         try {
-            const response = await fetch(`${API.USERS}/${email}`, {
+            const response = await apiFetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ isActive: status })
@@ -91,7 +97,7 @@ const Auth = {
 
     updateUserAccess: async function (email, accessB1, accessB2) {
         try {
-            const response = await fetch(`${API.USERS}/${email}`, {
+            const response = await apiFetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ accessB1, accessB2 })
@@ -105,7 +111,7 @@ const Auth = {
 
     updateDeviceLimit: async function (email, limit) {
         try {
-            const response = await fetch(`${API.USERS}/${email}`, {
+            const response = await apiFetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ deviceLimit: limit })
@@ -121,7 +127,7 @@ const Auth = {
 
     login: async function (email, password) {
         try {
-            const response = await fetch(API.LOGIN, {
+            const response = await apiFetch(API.LOGIN, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -141,7 +147,7 @@ const Auth = {
 
     logout: async function () {
         try {
-            await fetch(API.LOGOUT, { method: 'POST' });
+            await apiFetch(API.LOGOUT, { method: 'POST' });
         } catch (e) {
             console.error('Logout error:', e);
         }
@@ -151,7 +157,7 @@ const Auth = {
 
     getCurrentUser: async function () {
         try {
-            const response = await fetch(API.ME);
+            const response = await apiFetch(API.ME);
             if (!response.ok) return null;
             const result = await response.json();
             return result.success ? result.user : null;
@@ -289,7 +295,7 @@ const Auth = {
 
         if (!this._pingInterval) {
             this._pingInterval = setInterval(() => {
-                fetch(API.PING).catch(() => { });
+                apiFetch(API.PING).catch(() => { });
             }, 60 * 1000); // Ping every minute
         }
 
@@ -327,7 +333,7 @@ const Auth = {
 
     checkMaintenance: async function () {
         try {
-            const response = await fetch(API.MAINTENANCE_STATUS);
+            const response = await apiFetch(API.MAINTENANCE_STATUS);
             const result = await response.json();
             return result.maintenance;
         } catch (e) {
@@ -337,7 +343,7 @@ const Auth = {
 
     toggleMaintenance: async function (enabled) {
         try {
-            const response = await fetch(API.MAINTENANCE, {
+            const response = await apiFetch(API.MAINTENANCE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ enabled })
