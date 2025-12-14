@@ -5,20 +5,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>German Quiz Master - Startseite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+  <div class="reactive-bg"></div>
+
+  <div id="promoToast" class="promo-toast">
+    <div class="promo-card" style="animation: slideInLeft 0.4s ease-out;">
+      <button id="promoClose" class="promo-close-btn">&times;</button>
+      <div class="promo-title">telc B1/B2 Zugang</div>
+      <div class="promo-sub">Preis: 29 € / Monat • Echte Prüfungen</div>
+      <div class="promo-actions" style="margin-top: 8px;">
+        <a class="promo-contact" href="https://chat.whatsapp.com/BBsrWhmwaGR0wc9UMGdbsp" target="_blank"><i class="fab fa-whatsapp"></i> Kontakt</a>
+        <a class="promo-contact" href="https://t.me/+MPh4lDdJDQpjY2Q8" target="_blank" style="background: linear-gradient(135deg,#0088cc,#3aa0e6);"><i class="fab fa-telegram"></i> Kontakt</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Floating Navbar -->
   <nav class="navbar fade-in">
     <a href="home.html" class="logo">
-      <i class="fas fa-flag" style="color: var(--primary-color); margin-right: 10px;"></i>
+      <i class="fas fa-earth-europe" style="color: var(--primary-color); margin-right: 10px;"></i>
       Vorbereitung
     </a>
-    <div id="auth-buttons">
-      <!-- Populated by JS -->
+    <div class="menu-container">
+      <div class="nav-segment">
+        <button id="menuTrigger" class="btn" style="padding: 8px 14px;"><i class="fas fa-bars"></i></button>
+      </div>
+      <div id="menuCard" class="menu-card fade-in" style="animation-delay: 0.05s;"></div>
     </div>
   </nav>
 
@@ -27,9 +46,8 @@
     <!-- Left Column: Welcome Text -->
     <div class="welcome-column">
       <div class="welcome-content">
-        <h1 class="welcome-title">Deutsch Meistern</h1>
-        <p class="welcome-description">Die moderne Plattform für Ihre B1 und B2 Prüfungsvorbereitung. Interaktiv,
-          effektiv und direkt auf den Punkt.</p>
+        <h1 id="welcomeTitle" class="welcome-title">TELC Prüfung</h1>
+        <p id="welcomeDesc" class="welcome-description" data-text="Die Plattform mit echten telc B1/B2 Prüfungen zum Üben – realistische Simulationen, sofortiges Feedback und klare Erklärungen. Lerne smart, übe gezielt und bereite dich motiviert auf deine Prüfung vor."></p>
         <div class="welcome-features">
           <div class="feature-item">
             <i class="fas fa-check-circle"></i>
@@ -99,21 +117,143 @@
   <script>
     (async function () {
       const user = await Auth.getCurrentUser();
-      const authBtns = document.getElementById('auth-buttons');
-
+      const menu = document.getElementById('menuCard');
+      if (!menu) return;
       if (user) {
-        authBtns.innerHTML = `
-          <span style="margin-right: 15px; font-weight: 600; color: var(--dark-color);">Hallo, ${user.name}</span>
-          <button onclick="Auth.logout()" class="btn btn-danger" style="padding: 8px 20px; font-size: 0.9rem;">Abmelden</button>
-      `;
+        menu.innerHTML = `
+          <div class="menu-header"><span>Menü</span><span>${user.name || 'Benutzer'}</span></div>
+          <div class="menu-row">
+            <button id="theme-toggle" class="menu-item" style="padding: 10px 14px;"></button>
+            <button onclick="Auth.logout()" class="menu-item primary">Abmelden</button>
+          </div>
+        `;
       } else {
-        authBtns.innerHTML = `
-          <a href="login.html" class="btn btn-primary" style="padding: 10px 24px; margin-right: 10px;">Anmelden</a>
-          <a href="register.html" class="btn" style="padding: 10px 24px; background: white; color: var(--primary-color); border: 1px solid var(--primary-color);">Registrieren</a>
-      `;
+        menu.innerHTML = `
+          <div class="menu-header"><span>Menü</span><span>Gast</span></div>
+          <div class="menu-row">
+            <a href="login.html" class="menu-item primary">Anmelden</a>
+            <a href="register.html" class="menu-item">Registrieren</a>
+          </div>
+          <div class="menu-row">
+            <button id="theme-toggle" class="menu-item" style="padding: 10px 14px;"></button>
+          </div>
+        `;
+      }
+      if (document.getElementById('theme-toggle')) {
+        updateThemeToggleIcon();
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
       }
     })();
+
+    (function () {
+      try {
+        var seen = localStorage.getItem('promo_seen');
+        var toast = document.getElementById('promoToast');
+        var closeBtn = document.getElementById('promoClose');
+        if (!seen && toast) {
+          toast.style.display = 'block';
+          setTimeout(function () {
+            toast.style.display = 'none';
+            localStorage.setItem('promo_seen', '1');
+          }, 6000);
+        }
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            toast.style.display = 'none';
+            localStorage.setItem('promo_seen', '1');
+          });
+        }
+      } catch (e) {}
+    })();
+
+    (function () {
+      function typeWrite(el, text, speed) {
+        if (!el) return;
+        var caret = document.createElement('span');
+        caret.className = 'type-caret';
+        el.textContent = '';
+        el.appendChild(caret);
+        var i = 0;
+        var timer = setInterval(function () {
+          if (i < text.length) {
+            caret.before(document.createTextNode(text.charAt(i)));
+            i++;
+          } else {
+            clearInterval(timer);
+            caret.remove();
+          }
+        }, speed);
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var titleEl = document.getElementById('welcomeTitle');
+        var descEl = document.getElementById('welcomeDesc');
+        var titleText = (titleEl && titleEl.textContent) || '';
+        var descText = (descEl && (descEl.getAttribute('data-text') || descEl.textContent)) || '';
+        if (titleEl) typeWrite(titleEl, titleText, 50);
+        if (descEl) typeWrite(descEl, descText, 18);
+      });
+    })();
+    (function () {
+      var trigger = document.getElementById('menuTrigger');
+      var card = document.getElementById('menuCard');
+      function toggleMenu() {
+        if (!card) return;
+        var show = !(card.style.display === 'block');
+        card.style.display = show ? 'block' : 'none';
+        card.classList.toggle('open', show);
+      }
+      function closeMenu(e) {
+        if (!card) return;
+        var within = card.contains(e.target) || trigger.contains(e.target);
+        if (!within) { card.style.display = 'none'; card.classList.remove('open'); }
+      }
+      if (trigger) trigger.addEventListener('click', toggleMenu);
+      document.addEventListener('click', closeMenu);
+    })();
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var fab = document.getElementById('contactFabHome');
+      var panel = document.getElementById('contactPanelHome');
+      var closeBtn = document.getElementById('contactCloseHome');
+      var headphoneIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>';
+      function toggle() {
+        if (!panel || !fab) return;
+        var show = !panel.classList.contains('open');
+        panel.classList.toggle('open', show);
+        fab.classList.toggle('open', show);
+        fab.setAttribute('aria-expanded', show ? 'true' : 'false');
+        fab.innerHTML = show ? '<i class="fas fa-times"></i>' : headphoneIcon;
+      }
+      if (fab) fab.addEventListener('click', function (e) { e.preventDefault(); toggle(); });
+      if (closeBtn) closeBtn.addEventListener('click', function (e) { e.preventDefault(); panel.classList.remove('open'); fab.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.innerHTML = headphoneIcon; });
+      document.addEventListener('click', function (e) {
+        if (!panel || !fab) return;
+        var within = panel.contains(e.target) || fab.contains(e.target);
+        if (!within) { panel.classList.remove('open'); fab.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.innerHTML = headphoneIcon; }
+      });
+    });
+  </script>
+  <a href="javascript:void(0)" id="contactFabHome" class="floating-audio-btn" aria-label="Kontakt" role="button" aria-controls="contactPanelHome">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path>
+    </svg>
+  </a>
+  <div id="contactPanelHome" class="contact-panel">
+    <div class="contact-header">
+      <span><i class="fas fa-headphones" style="margin-right:8px;"></i>Need Help?</span>
+      <button id="contactCloseHome" class="contact-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="contact-sub">Get support from developer ABDELLAH SELMANI</div>
+    <div class="contact-list">
+      <a href="https://chat.whatsapp.com/BBsrWhmwaGR0wc9UMGdbsp" target="_blank" class="contact-link whatsapp"><span><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</span><span>Quick support</span></a>
+      <a href="https://www.linkedin.com/in/abdellahselmani/" target="_blank" class="contact-link linkedin"><span><i class="fab fa-linkedin" style="color:#0A66C2;"></i> LinkedIn</span><span>Professional</span></a>
+      <a href="https://www.instagram.com/unezac/" target="_blank" class="contact-link instagram"><span><i class="fab fa-instagram" style="color:#E1306C;"></i> Instagram</span><span>Follow</span></a>
+      <a href="https://x.com/uneizac_" target="_blank" class="contact-link"><span><i class="fab fa-twitter" style="color:#1DA1F2;"></i> Twitter</span><span>News</span></a>
+      <a href="https://t.me/+MPh4lDdJDQpjY2Q8" target="_blank" class="contact-link"><span><i class="fab fa-telegram" style="color:#0088cc;"></i> Telegram</span><span>Contact</span></a>
+    </div>
+    <div class="contact-foot">WhatsApp: +212 648 915 040</div>
+  </div>
 </body>
 
 </html>

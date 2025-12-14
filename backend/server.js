@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -5,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const db = require('./database');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,14 +16,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'german-quiz-secret-key', // Change this in production
+    secret: process.env.SESSION_SECRET || 'fallback-secret-key', // Use .env or fallback
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
 }));
-
-// Serve static files from the parent directory (frontend)
-app.use(express.static(path.join(__dirname, '../')));
 
 // Redirect root to login
 app.get('/', (req, res) => {
@@ -76,23 +75,51 @@ const checkMaintenance = (req, res, next) => {
 
 app.use(checkMaintenance);
 
+app.get('/quiz/:file', (req, res, next) => {
+    const file = req.params.file;
+    if (!file.endsWith('.html')) return next();
+    const fullPath = path.join(__dirname, '../quiz', file);
+    fs.readFile(fullPath, 'utf8', (err, html) => {
+        if (err) return next();
+        const inject = `
+<script>(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>
+:root[data-theme="dark"] body{background-color:#0B1220;color:#CBD5E1;background-image:none}
+:root[data-theme="dark"] .main-header{background-color:#1F2937;color:#F8FAFC}
+:root[data-theme="dark"] .header{background-color:#1F2937;color:#F8FAFC}
+:root[data-theme="dark"] .quiz-scroll-container,:root[data-theme="dark"] .right-column-content{background-color:#0F172A;color:#CBD5E1;box-shadow:none}
+:root[data-theme="dark"] .question-box{background-color:#0F172A;border-color:#334155}
+:root[data-theme="dark"] .question-card{background-color:#0F172A;border-color:#334155;color:#CBD5E1}
+:root[data-theme="dark"] .question-text{color:#94A3B8}
+:root[data-theme="dark"] .drop-target{background-color:#0F172A;border-color:#334155}
+:root[data-theme="dark"] .draggable{background-color:#1E293B;color:#CBD5E1}
+:root[data-theme="dark"] .quiz-button,:root[data-theme="dark"] .quiz-button-link{background-color:#1E293B !important;color:#F8FAFC !important;border-color:rgba(148,163,184,0.2)}
+:root[data-theme="dark"] #result{background-color:#0F172A;color:#CBD5E1}
+</style>`;
+        const output = html.includes('</head>') ? html.replace('</head>', inject + '</head>') : inject + html;
+        res.type('html').send(output);
+    });
+});
+
+// Serve static files from the parent directory (frontend)
+app.use(express.static(path.join(__dirname, '../')));
+
 // --- API Routes ---
 
-// Register
+// Register (pending access)
 app.post('/api/register', (req, res) => {
-    const { name, surname, email, password } = req.body;
+    const { name, surname, email, password, phone } = req.body;
     const passwordHash = bcrypt.hashSync(password, 10);
 
-    // New users are inactive by default
-    const sql = `INSERT INTO users (name, surname, email, password, role, accessB1, accessB2, isActive, deviceLimit) 
-                 VALUES (?, ?, ?, ?, 'user', 1, 1, 1, 1)`;
+    const sql = `INSERT INTO users (name, surname, email, password, role, accessB1, accessB2, isActive, deviceLimit, phone) 
+                 VALUES (?, ?, ?, ?, 'user', 0, 0, 0, 1, ?)`;
 
-    db.run(sql, [name, surname, email, passwordHash], function (err) {
+    db.run(sql, [name, surname, email, passwordHash, phone || null], function (err) {
         if (err) {
             console.error('Registration Error:', err.message);
             return res.json({ success: false, message: 'E-Mail wird bereits verwendet.' });
         }
-        res.json({ success: true, message: 'Registrierung erfolgreich.' });
+        res.json({ success: true, message: 'Registrierung eingegangen. Ein Administrator wird Ihren Zugang freigeben.' });
     });
 });
 
@@ -177,7 +204,7 @@ app.get('/ping', (req, res) => {
 
 // Get All Users
 app.get('/api/users', requireAdmin, (req, res) => {
-    db.all("SELECT id, name, surname, email, role, accessB1, accessB2, isActive, deviceLimit FROM users", [], (err, rows) => {
+    db.all("SELECT id, name, surname, email, role, accessB1, accessB2, isActive, deviceLimit, phone FROM users", [], (err, rows) => {
         if (err) {
             return res.status(500).json({ success: false, message: err.message });
         }

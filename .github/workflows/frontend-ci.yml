@@ -1,0 +1,38 @@
+name: Frontend CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify frontend files exist
+        run: |
+          ls -la
+          test -f home.html
+          test -f css/style.css
+          test -f index1.html
+          test -f index2.html
+          test -f login.html
+          test -f admin.html
+          test -f admin_login.html
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: |
+            home.html
+            index1.html
+            index2.html
+            login.html
+            admin.html
+            admin_login.html
+            css/
+            js/
+            quiz/

@@ -3,6 +3,18 @@
  * Uses Node.js Backend API
  */
 
+const API = {
+    BASE: '/api',
+    USERS: '/api/users',
+    REGISTER: '/api/register',
+    LOGIN: '/api/login',
+    LOGOUT: '/api/logout',
+    ME: '/api/me',
+    MAINTENANCE: '/api/maintenance',
+    MAINTENANCE_STATUS: '/api/maintenance-status',
+    PING: '/ping'
+};
+
 const Auth = {
     init: function () {
         this.checkSession();
@@ -13,87 +25,94 @@ const Auth = {
 
     getUsers: async function () {
         try {
-            const response = await fetch('/api/users');
+            const response = await fetch(API.USERS);
+            if (!response.ok) throw new Error('Network response was not ok');
             const users = await response.json();
             return users;
         } catch (e) {
-            console.error(e);
+            console.error('Error fetching users:', e);
             return [];
         }
     },
 
     register: async function (user) {
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch(API.REGISTER, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
             return await response.json();
         } catch (e) {
-            return { success: false, message: 'Server error' };
+            console.error('Registration failed:', e);
+            return { success: false, message: 'Server error. Bitte versuchen Sie es später erneut.' };
         }
     },
 
     addUser: async function (user) {
         try {
-            const response = await fetch('/api/users', {
+            const response = await fetch(API.USERS, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
             return await response.json();
         } catch (e) {
+            console.error('Error adding user:', e);
             return { success: false, message: 'Server error' };
         }
     },
 
     deleteUser: async function (email) {
         try {
-            const response = await fetch(`/api/users/${email}`, {
+            const response = await fetch(`${API.USERS}/${email}`, {
                 method: 'DELETE'
             });
             return await response.json();
         } catch (e) {
+            console.error('Error deleting user:', e);
             return { success: false, message: 'Server error' };
         }
     },
 
     updateUserStatus: async function (email, status) {
         try {
-            const response = await fetch(`/api/users/${email}`, {
+            const response = await fetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ isActive: status })
             });
             return await response.json();
         } catch (e) {
+            console.error('Error updating user status:', e);
             return { success: false, message: 'Server error' };
         }
     },
 
     updateUserAccess: async function (email, accessB1, accessB2) {
         try {
-            const response = await fetch(`/api/users/${email}`, {
+            const response = await fetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ accessB1, accessB2 })
             });
             return await response.json();
         } catch (e) {
+            console.error('Error updating user access:', e);
             return { success: false, message: 'Server error' };
         }
     },
 
     updateDeviceLimit: async function (email, limit) {
         try {
-            const response = await fetch(`/api/users/${email}`, {
+            const response = await fetch(`${API.USERS}/${email}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ deviceLimit: limit })
             });
             return await response.json();
         } catch (e) {
+            console.error('Error updating device limit:', e);
             return { success: false, message: 'Server error' };
         }
     },
@@ -102,7 +121,7 @@ const Auth = {
 
     login: async function (email, password) {
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch(API.LOGIN, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -115,22 +134,29 @@ const Auth = {
             }
             return result;
         } catch (e) {
-            return { success: false, message: 'Server error' };
+            console.error('Login error:', e);
+            return { success: false, message: 'Verbindungsfehler zum Server.' };
         }
     },
 
     logout: async function () {
-        await fetch('/api/logout', { method: 'POST' });
+        try {
+            await fetch(API.LOGOUT, { method: 'POST' });
+        } catch (e) {
+            console.error('Logout error:', e);
+        }
         localStorage.removeItem('quiz_user_role');
         window.location.href = 'home.html';
     },
 
     getCurrentUser: async function () {
         try {
-            const response = await fetch('/api/me');
+            const response = await fetch(API.ME);
+            if (!response.ok) return null;
             const result = await response.json();
             return result.success ? result.user : null;
         } catch (e) {
+            // Quietly fail for current user check (e.g. network issue or not logged in)
             return null;
         }
     },
@@ -173,7 +199,7 @@ const Auth = {
     requireAdmin: async function () {
         const user = await this.getCurrentUser();
         if (!user || user.role !== 'admin') {
-            window.location.href = 'home.html';
+            window.location.href = 'admin_login.html';
         }
     },
 
@@ -196,8 +222,6 @@ const Auth = {
             const requestedPage = examLevel === 'B1' ? 'index1.html' : 'index2.html';
             localStorage.setItem('quiz_redirect_after_login', requestedPage);
             localStorage.setItem('quiz_requested_exam', examLevel);
-
-            alert('Bitte melden Sie sich an, um auf die Prüfung zuzugreifen.');
             window.location.href = 'login.html';
             return;
         }
@@ -216,7 +240,6 @@ const Auth = {
     // --- Settings ---
 
     getSettings: function () {
-        // Settings still local for now, or could be moved to DB
         return JSON.parse(localStorage.getItem('quiz_settings') || '{"logoutTimer": 15}');
     },
 
@@ -231,7 +254,6 @@ const Auth = {
 
     setupAutoLogout: function () {
         // Only run if we think we are logged in (quick check)
-        // Real check happens via ping
 
         const settings = this.getSettings();
         const timeoutMinutes = settings.logoutTimer || 15;
@@ -257,10 +279,20 @@ const Auth = {
             this.hideWarning();
 
             // Send ping to server to keep session alive
-            fetch('/ping').catch(() => { });
+            // We throttle this to not spam the server on every mousemove
+            // But for simplicity in this version, we trust the debounce of the event listener roughly
         };
 
-        // Events to reset timer
+        // Throttled ping would be better, but we leave as is for now or just ping in interval
+        // Actually the original code pinged on every resetTimer which is on every mousemove. 
+        // That is bad. Let's fix it to only ping periodically.
+
+        if (!this._pingInterval) {
+            this._pingInterval = setInterval(() => {
+                fetch(API.PING).catch(() => { });
+            }, 60 * 1000); // Ping every minute
+        }
+
         ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
             document.addEventListener(evt, resetTimers);
         });
@@ -295,7 +327,7 @@ const Auth = {
 
     checkMaintenance: async function () {
         try {
-            const response = await fetch('/api/maintenance-status');
+            const response = await fetch(API.MAINTENANCE_STATUS);
             const result = await response.json();
             return result.maintenance;
         } catch (e) {
@@ -305,7 +337,7 @@ const Auth = {
 
     toggleMaintenance: async function (enabled) {
         try {
-            const response = await fetch('/api/maintenance', {
+            const response = await fetch(API.MAINTENANCE, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ enabled })
@@ -319,3 +351,62 @@ const Auth = {
 
 // Initialize on load
 Auth.init();
+
+// Theme
+const Theme = {
+    get: function () {
+        return localStorage.getItem('theme') || 'light';
+    },
+    set: function (t) {
+        localStorage.setItem('theme', t);
+        document.documentElement.setAttribute('data-theme', t);
+    }
+};
+
+function updateThemeToggleIcon() {
+    const el = document.getElementById('theme-toggle');
+    if (!el) return;
+    const isDark = Theme.get() === 'dark';
+    el.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+}
+
+function toggleTheme() {
+    const next = Theme.get() === 'dark' ? 'light' : 'dark';
+    Theme.set(next);
+    updateThemeToggleIcon();
+}
+
+(function () {
+    Theme.set(Theme.get());
+    updateThemeToggleIcon();
+    document.addEventListener('DOMContentLoaded', function () {
+        const t = document.getElementById('theme-toggle');
+        if (t) t.addEventListener('click', toggleTheme);
+    });
+})();
+
+// Reactive background
+(function () {
+    function ensureLayer() {
+        if (!document.querySelector('.reactive-bg')) {
+            const layer = document.createElement('div');
+            layer.className = 'reactive-bg';
+            document.body.appendChild(layer);
+        }
+    }
+    function onMove(e) {
+        const x = e.clientX + 'px';
+        const y = e.clientY + 'px';
+        const root = document.documentElement;
+        root.style.setProperty('--mouse-x', x);
+        root.style.setProperty('--mouse-y', y);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        ensureLayer();
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', (ev) => {
+            const t = ev.touches && ev.touches[0];
+            if (t) onMove({ clientX: t.clientX, clientY: t.clientY });
+        }, { passive: true });
+    });
+})();

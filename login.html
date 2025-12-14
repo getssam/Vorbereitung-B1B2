@@ -188,6 +188,7 @@
 </head>
 
 <body>
+    <div class="reactive-bg"></div>
     <div class="login-card">
         <div class="brand-icon">
             <i class="fas fa-shield-alt"></i>
@@ -271,13 +272,21 @@
                     }
                 }
             } else {
-                errorMsg.textContent = result.message;
+                errorMsg.innerHTML = `${result.message}<br>
+                <span style="display:inline-flex;align-items:center;gap:8px;margin-top:8px;">
+                  <i class="fab fa-whatsapp" style="color:#25D366;"></i>
+                  <a href="https://chat.whatsapp.com/BBsrWhmwaGR0wc9UMGdbsp" target="_blank" style="color:#991b1b;text-decoration:underline;">Kontakt über WhatsApp</a>
+                </span>
+                <span style="display:inline-flex;align-items:center;gap:8px;margin-top:8px;margin-left:12px;">
+                  <i class="fab fa-telegram" style="color:#0088cc;"></i>
+                  <a href="https://t.me/+MPh4lDdJDQpjY2Q8" target="_blank" style="color:#991b1b;text-decoration:underline;">Kontakt über Telegram</a>
+                </span>`;
                 errorMsg.style.display = 'block';
                 btn.innerHTML = originalBtnContent;
                 btn.disabled = false;
             }
         });
     </script>
-</body>
+  </body>
 
 </html>

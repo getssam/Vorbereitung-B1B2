@@ -68,6 +68,7 @@
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
         }
@@ -234,6 +235,14 @@
             </div>
 
             <div class="input-group">
+                <label>Telefon / WhatsApp</label>
+                <div class="input-wrapper">
+                    <input type="text" id="phone" placeholder="+212 6xx xx xx xx">
+                    <i class="fas fa-phone"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
                 <label>Passwort</label>
                 <div class="input-wrapper">
                     <input type="password" id="password" required placeholder="••••••••">
@@ -251,6 +260,11 @@
 
         <div class="security-badge">
             <i class="fas fa-lock"></i> Ihre Daten sind sicher
+        </div>
+        <div class="security-badge" style="margin-left: 10px;">
+            <i class="fas fa-headset"></i> Support auf Deutsch
+            <a href="https://chat.whatsapp.com/BBsrWhmwaGR0wc9UMGdbsp" target="_blank" style="margin-left: 8px; color: #059669; font-weight: 600; text-decoration: none;">WhatsApp</a>
+            <a href="https://t.me/+MPh4lDdJDQpjY2Q8" target="_blank" style="margin-left: 8px; color: #059669; font-weight: 600; text-decoration: none;">Telegram</a>
         </div>
 
         <div class="footer-links">
@@ -281,19 +295,20 @@
                 name: name,
                 surname: surname,
                 email: email,
-                password: password
+                password: password,
+                phone: document.getElementById('phone').value
             };
 
             const result = await Auth.register(newUser);
 
             if (result.success) {
                 errorMsg.style.display = 'none';
-                successMsg.textContent = 'Registrierung erfolgreich! Sie können sich jetzt anmelden.';
+                successMsg.textContent = 'Registrierung eingegangen. Bitte warten Sie auf die Freigabe durch den Administrator oder kontaktieren Sie uns per WhatsApp/Telegram.';
                 successMsg.style.display = 'block';
                 document.getElementById('registerForm').reset();
                 btn.innerHTML = '<i class="fas fa-check"></i> Erledigt';
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = 'home.html';
                 }, 3000);
             } else {
                 successMsg.style.display = 'none';

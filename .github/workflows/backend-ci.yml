@@ -1,0 +1,32 @@
+name: Backend CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Smoke start server
+        working-directory: backend
+        env:
+          PORT: 3000
+          SESSION_SECRET: test-secret
+        run: |
+          node server.js &
+          SERVER_PID=$!
+          sleep 3
+          kill $SERVER_PID

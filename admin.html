@@ -9,20 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
-            overflow: hidden;
-            /* Prevent body scroll, let content scroll */
         }
 
         /* Sidebar */
         .sidebar {
             width: 260px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            background: var(--card-bg);
+            border-right: var(--glass-border);
             display: flex;
             flex-direction: column;
             padding: 25px;
@@ -89,10 +84,8 @@
 
         /* Glass Card for Table */
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--card-bg);
+            border: var(--glass-border);
             border-radius: 20px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
@@ -112,13 +105,13 @@
             color: var(--text-light);
             font-weight: 600;
             font-size: 0.9rem;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 2px solid var(--light-color);
         }
 
         td {
             padding: 15px 20px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-            color: var(--dark-color);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text-color);
             vertical-align: middle;
         }
 
@@ -127,7 +120,7 @@
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(148, 163, 184, 0.08);
         }
 
         /* Badges & Buttons */
@@ -188,12 +181,13 @@
         }
 
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 20px;
             width: 100%;
             max-width: 450px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            border: var(--glass-border);
             transform: scale(0.95);
             animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -230,19 +224,20 @@
             padding: 12px;
             border: 1px solid #e5e7eb;
             border-radius: 10px;
-            background: #f9fafb;
+            background: var(--light-color);
             transition: all 0.2s;
         }
 
         .form-group input:focus {
             border-color: var(--primary-color);
-            background: white;
+            background: var(--bg-color);
             outline: none;
         }
     </style>
 </head>
 
 <body>
+    <div class="reactive-bg"></div>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -447,6 +442,7 @@
                 const userDetails = `
                     <div style="font-weight: 600;">${user.name} ${user.surname}</div>
                     <div style="font-size: 0.85rem; color: var(--text-light);">${user.email}</div>
+                    ${user.phone ? `<div style="font-size: 0.85rem; color: var(--text-light);"><i class="fas fa-phone" style="margin-right:6px;"></i>${user.phone}</div>` : ''}
                 `;
 
                 if (!user.isActive) {
