@@ -233,6 +233,16 @@ const Auth = {
         }
     },
 
+    // --- Helper for Path Resolution ---
+    resolvePath: function (filename) {
+        // If we are in the 'quiz/' directory, go up one level
+        if (window.location.pathname.includes('/quiz/')) {
+            return '../' + filename;
+        }
+        // Otherwise, assume we are in root
+        return filename;
+    },
+
     checkSession: async function () {
         const user = await this.getCurrentUser();
         const path = window.location.pathname;
@@ -253,7 +263,7 @@ const Auth = {
         // Check Maintenance Mode
         const maintenance = await this.checkMaintenance();
         if (maintenance && user?.role !== 'admin' && !path.endsWith('maintenance.html') && !path.endsWith('admin_login.html')) {
-             window.location.href = 'maintenance.html';
+             window.location.href = this.resolvePath('maintenance.html');
              return;
         }
 
@@ -261,16 +271,16 @@ const Auth = {
             // Not logged in
             if (!isPublicPage) {
                 // Trying to access protected page -> Redirect to login
-                window.location.href = 'login.html';
+                window.location.href = this.resolvePath('login.html');
             }
         } else {
             // Logged in
             if (isGuestPage) {
                 // On a guest page -> Redirect to dashboard
                 if (user.role === 'admin') {
-                    window.location.href = 'admin.html';
+                    window.location.href = this.resolvePath('admin.html');
                 } else {
-                    window.location.href = 'home.html';
+                    window.location.href = this.resolvePath('home.html');
                 }
             }
         }
@@ -279,7 +289,7 @@ const Auth = {
     requireAdmin: async function () {
         const user = await this.getCurrentUser();
         if (!user || user.role !== 'admin') {
-            window.location.href = 'admin_login.html';
+            window.location.href = this.resolvePath('admin_login.html');
         }
     },
 
@@ -306,7 +316,7 @@ const Auth = {
             const requestedPage = examLevel === 'B1' ? 'index1.html' : 'index2.html';
             localStorage.setItem('quiz_redirect_after_login', requestedPage);
             localStorage.setItem('quiz_requested_exam', examLevel);
-            window.location.href = 'login.html';
+            window.location.href = this.resolvePath('login.html');
             return;
         }
 
@@ -321,8 +331,8 @@ const Auth = {
         const examPage = examLevel === 'B1' ? 'index1.html' : 'index2.html';
         const currentPage = window.location.pathname.split('/').pop();
 
-        if (currentPage !== examPage) {
-            window.location.href = examPage;
+        if (currentPage !== examPage && !window.location.pathname.includes('/quiz/')) {
+            window.location.href = this.resolvePath(examPage);
         }
     },
 
