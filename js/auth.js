@@ -164,6 +164,22 @@ const Auth = {
 
     // --- Session Management ---
 
+    loginWithGitHub: async function () {
+        try {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'github',
+                options: {
+                    redirectTo: window.location.origin + '/home.html',
+                },
+            });
+            if (error) throw error;
+            return { success: true };
+        } catch (e) {
+            console.error('GitHub Login error:', e);
+            return { success: false, message: e.message };
+        }
+    },
+
     login: async function (email, password) {
         try {
             const { data, error } = await supabaseClient.auth.signInWithPassword({

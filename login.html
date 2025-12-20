@@ -220,6 +220,17 @@
             </button>
         </form>
 
+        <div style="margin: 20px 0; position: relative; text-align: center;">
+            <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1);">
+            <span
+                style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--card-bg); padding: 0 10px; font-size: 0.8rem; color: #64748b;">ODER</span>
+        </div>
+
+        <button id="githubLoginBtn" class="btn"
+            style="width: 100%; padding: 14px; font-size: 1.05rem; background: #333; color: white; border: none;">
+            <i class="fab fa-github" style="margin-right: 8px;"></i> Mit GitHub anmelden
+        </button>
+
         <div class="security-badge">
             <i class="fas fa-lock"></i> Sichere Verbindung
         </div>
@@ -288,7 +299,15 @@
                 btn.disabled = false;
             }
         });
+
+        document.getElementById('githubLoginBtn').addEventListener('click', async function () {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Weiterleiten...';
+            btn.disabled = true;
+            await Auth.loginWithGitHub();
+        });
     </script>
-  </body>
+</body>
 
 </html>
