@@ -13,7 +13,7 @@ const Auth = {
 
         this.checkSession();
         this.setupAutoLogout();
-        
+
         // Listen for auth state changes
         if (supabaseClient) {
             supabaseClient.auth.onAuthStateChange((event, session) => {
@@ -24,7 +24,7 @@ const Auth = {
                     // Redirect to home if on protected page
                     const path = window.location.pathname;
                     if (path.includes('admin.html') || path.includes('quiz/')) {
-                         window.location.href = 'home.html';
+                        window.location.href = 'home.html';
                     }
                 }
             });
@@ -38,7 +38,7 @@ const Auth = {
             const { data, error } = await supabaseClient
                 .from('users')
                 .select('*');
-            
+
             if (error) throw error;
             return data;
         } catch (e) {
@@ -186,21 +186,27 @@ const Auth = {
             }
 
             if (!profile.isActive && profile.role !== 'admin') {
-                 await supabaseClient.auth.signOut();
-                 return { success: false, message: 'Ihr Konto ist noch nicht aktiviert.' };
+                await supabaseClient.auth.signOut();
+                return { success: false, message: 'Ihr Konto ist noch nicht aktiviert.' };
             }
 
             // Store role for local checks
             localStorage.setItem('quiz_user_role', profile.role);
-            
+
             // Return user object similar to old API
-            return { 
-                success: true, 
-                user: profile 
+            return {
+                success: true,
+                user: profile
             };
         } catch (e) {
             console.error('Login error:', e);
-            return { success: false, message: 'Login fehlgeschlagen. Überprüfen Sie Ihre Daten.' };
+            let msg = 'Login fehlgeschlagen. Überprüfen Sie Ihre Daten.';
+            if (e.message) {
+                if (e.message.includes('Invalid login credentials')) msg = 'Falsches Passwort oder E-Mail.';
+                else if (e.message.includes('Email not confirmed')) msg = 'E-Mail noch nicht bestätigt.';
+                else msg = e.message;
+            }
+            return { success: false, message: msg };
         }
     },
 
@@ -226,7 +232,7 @@ const Auth = {
                 .select('*')
                 .eq('email', session.user.email)
                 .single();
-            
+
             return profile;
         } catch (e) {
             return null;
@@ -252,7 +258,7 @@ const Auth = {
             path.endsWith('register.html') ||
             path.endsWith('home.html') ||
             path.endsWith('admin_login.html') ||
-            path.endsWith('/') || 
+            path.endsWith('/') ||
             path.endsWith('maintenance.html');
 
         // Pages that should redirect if already logged in (e.g. login/register)
@@ -263,8 +269,8 @@ const Auth = {
         // Check Maintenance Mode
         const maintenance = await this.checkMaintenance();
         if (maintenance && user?.role !== 'admin' && !path.endsWith('maintenance.html') && !path.endsWith('admin_login.html')) {
-             window.location.href = this.resolvePath('maintenance.html');
-             return;
+            window.location.href = this.resolvePath('maintenance.html');
+            return;
         }
 
         if (!user) {
@@ -298,7 +304,7 @@ const Auth = {
     checkExamAccess: async function (examLevel) {
         const user = await this.getCurrentUser();
         if (!user) return false;
-        
+
         // Check specific access field
         if (examLevel === 'B1' && user.accessB1) return true;
         if (examLevel === 'B2' && user.accessB2) return true;
@@ -415,7 +421,7 @@ const Auth = {
                 .select('value')
                 .eq('key', 'maintenance_mode')
                 .single();
-            
+
             if (error || !data) return false;
             return data.value === 'true'; // Stored as string or boolean
         } catch (e) {
