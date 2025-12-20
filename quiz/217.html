@@ -826,4 +826,14 @@ Ihre Freundin sucht einen Kindergartenplatz für ihren kleinen Sohn." style="tex
   document.querySelectorAll('.drop-target').forEach(updateDropTargetState);
 </script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Auth.requireExamAccess('B1');
+        });
+    </script>
+    
 </body></html>

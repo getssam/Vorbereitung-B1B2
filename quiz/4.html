@@ -197,4 +197,14 @@
     }
   </script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Auth.requireExamAccess('B2');
+        });
+    </script>
+    
 </body></html>

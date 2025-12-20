@@ -1,80 +1,116 @@
 /**
- * German Quiz Master - Authentication & Logic
- * Uses Node.js Backend API
+ * German Quiz Master - Authentication & Logic (Supabase Version)
+ * Replaces Node.js Backend with Supabase
  */
 
-const API = {
-    BASE: '/api',
-    USERS: '/api/users',
-    REGISTER: '/api/register',
-    LOGIN: '/api/login',
-    LOGOUT: '/api/logout',
-    ME: '/api/me',
-    MAINTENANCE: '/api/maintenance',
-    MAINTENANCE_STATUS: '/api/maintenance-status',
-    PING: '/ping'
-};
-
-const BACKEND_URL = window.location.hostname.endsWith('github.io') ? 'https://YOUR-BACKEND.up.railway.app' : '';
-const apiFetch = (path, options = {}) => {
-    const url = BACKEND_URL ? `${BACKEND_URL}${path}` : path;
-    return fetch(url, { credentials: 'include', ...options });
-};
-
 const Auth = {
-    init: function () {
+    init: async function () {
+        // Wait for DOM to be ready to ensure scripts are loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.init());
+            return;
+        }
+
         this.checkSession();
         this.setupAutoLogout();
+        
+        // Listen for auth state changes
+        if (supabaseClient) {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (event === 'SIGNED_IN') {
+                    // Update UI or redirect if needed
+                    console.log('User signed in:', session.user.email);
+                } else if (event === 'SIGNED_OUT') {
+                    // Redirect to home if on protected page
+                    const path = window.location.pathname;
+                    if (path.includes('admin.html') || path.includes('quiz/')) {
+                         window.location.href = 'home.html';
+                    }
+                }
+            });
+        }
     },
 
     // --- User Management ---
 
     getUsers: async function () {
         try {
-            const response = await apiFetch(API.USERS);
-            if (!response.ok) throw new Error('Network response was not ok');
-            const users = await response.json();
-            return users;
+            const { data, error } = await supabaseClient
+                .from('users')
+                .select('*');
+            
+            if (error) throw error;
+            return data;
         } catch (e) {
             console.error('Error fetching users:', e);
             return [];
         }
     },
 
-    register: async function (user) {
+    register: async function (userData) {
         try {
-            const response = await apiFetch(API.REGISTER, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user)
+            // 1. Sign up with Supabase Auth
+            const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                email: userData.email,
+                password: userData.password
             });
-            return await response.json();
+
+            if (authError) throw authError;
+
+            // 2. Create user profile in 'users' table
+            // Note: Ideally this should be done via a Trigger in Supabase
+            // But for now we do it client-side. RLS must allow insert.
+            const { error: dbError } = await supabaseClient
+                .from('users')
+                .insert([{
+                    email: userData.email, // Link by email (or use auth_id if you prefer)
+                    name: userData.name,
+                    surname: userData.surname,
+                    role: 'user', // Default role
+                    accessB1: 0,
+                    accessB2: 0,
+                    isActive: 0, // Wait for admin approval? Or 1 if auto-approve
+                    deviceLimit: 1,
+                    phone: userData.phone,
+                    auth_id: authData.user.id // Link to Auth User
+                }]);
+
+            if (dbError) {
+                // If DB insert fails, we might want to cleanup auth user or show error
+                console.error('Error creating profile:', dbError);
+                return { success: false, message: 'Fehler beim Erstellen des Profils.' };
+            }
+
+            return { success: true, message: 'Registrierung erfolgreich! Bitte warten Sie auf die Freischaltung.' };
         } catch (e) {
             console.error('Registration failed:', e);
-            return { success: false, message: 'Server error. Bitte versuchen Sie es später erneut.' };
+            return { success: false, message: e.message || 'Registrierung fehlgeschlagen.' };
         }
     },
 
-    addUser: async function (user) {
-        try {
-            const response = await apiFetch(API.USERS, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user)
-            });
-            return await response.json();
-        } catch (e) {
-            console.error('Error adding user:', e);
-            return { success: false, message: 'Server error' };
-        }
+    addUser: async function (userData) {
+        // Admin function to add user directly (creates auth user + profile)
+        // Note: Creating auth user from client requires the user to confirm email or auto-confirm enabled
+        // Admin usually shouldn't create users this way on client side without Service Key
+        // But we can try the same flow as register
+        return this.register(userData);
     },
 
     deleteUser: async function (email) {
         try {
-            const response = await apiFetch(`${API.USERS}/${email}`, {
-                method: 'DELETE'
-            });
-            return await response.json();
+            // Delete from public.users
+            const { error } = await supabaseClient
+                .from('users')
+                .delete()
+                .eq('email', email);
+
+            if (error) throw error;
+
+            // Note: Deleting from auth.users cannot be done from client side easily
+            // You would need an Edge Function or delete manually in Dashboard
+            console.log('User profile deleted. Note: Auth user must be deleted in Supabase Dashboard.');
+
+            return { success: true };
         } catch (e) {
             console.error('Error deleting user:', e);
             return { success: false, message: 'Server error' };
@@ -83,12 +119,13 @@ const Auth = {
 
     updateUserStatus: async function (email, status) {
         try {
-            const response = await apiFetch(`${API.USERS}/${email}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ isActive: status })
-            });
-            return await response.json();
+            const { error } = await supabaseClient
+                .from('users')
+                .update({ isActive: status })
+                .eq('email', email);
+
+            if (error) throw error;
+            return { success: true };
         } catch (e) {
             console.error('Error updating user status:', e);
             return { success: false, message: 'Server error' };
@@ -97,12 +134,13 @@ const Auth = {
 
     updateUserAccess: async function (email, accessB1, accessB2) {
         try {
-            const response = await apiFetch(`${API.USERS}/${email}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ accessB1, accessB2 })
-            });
-            return await response.json();
+            const { error } = await supabaseClient
+                .from('users')
+                .update({ accessB1, accessB2 })
+                .eq('email', email);
+
+            if (error) throw error;
+            return { success: true };
         } catch (e) {
             console.error('Error updating user access:', e);
             return { success: false, message: 'Server error' };
@@ -111,12 +149,13 @@ const Auth = {
 
     updateDeviceLimit: async function (email, limit) {
         try {
-            const response = await apiFetch(`${API.USERS}/${email}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ deviceLimit: limit })
-            });
-            return await response.json();
+            const { error } = await supabaseClient
+                .from('users')
+                .update({ deviceLimit: limit })
+                .eq('email', email);
+
+            if (error) throw error;
+            return { success: true };
         } catch (e) {
             console.error('Error updating device limit:', e);
             return { success: false, message: 'Server error' };
@@ -127,27 +166,47 @@ const Auth = {
 
     login: async function (email, password) {
         try {
-            const response = await apiFetch(API.LOGIN, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password
             });
-            const result = await response.json();
-            if (result.success) {
-                // Store minimal user info for synchronous checks if needed, 
-                // but rely on server session for security.
-                localStorage.setItem('quiz_user_role', result.user.role);
+
+            if (error) throw error;
+
+            // Fetch user profile to get role and status
+            const { data: profile, error: profileError } = await supabaseClient
+                .from('users')
+                .select('*')
+                .eq('email', email)
+                .single();
+
+            if (profileError || !profile) {
+                // Profile missing?
+                return { success: false, message: 'Benutzerprofil nicht gefunden.' };
             }
-            return result;
+
+            if (!profile.isActive && profile.role !== 'admin') {
+                 await supabaseClient.auth.signOut();
+                 return { success: false, message: 'Ihr Konto ist noch nicht aktiviert.' };
+            }
+
+            // Store role for local checks
+            localStorage.setItem('quiz_user_role', profile.role);
+            
+            // Return user object similar to old API
+            return { 
+                success: true, 
+                user: profile 
+            };
         } catch (e) {
             console.error('Login error:', e);
-            return { success: false, message: 'Verbindungsfehler zum Server.' };
+            return { success: false, message: 'Login fehlgeschlagen. Überprüfen Sie Ihre Daten.' };
         }
     },
 
     logout: async function () {
         try {
-            await apiFetch(API.LOGOUT, { method: 'POST' });
+            await supabaseClient.auth.signOut();
         } catch (e) {
             console.error('Logout error:', e);
         }
@@ -157,12 +216,19 @@ const Auth = {
 
     getCurrentUser: async function () {
         try {
-            const response = await apiFetch(API.ME);
-            if (!response.ok) return null;
-            const result = await response.json();
-            return result.success ? result.user : null;
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) return null;
+
+            // Fetch full profile
+            // We cache this to avoid too many requests? For now, fetch fresh.
+            const { data: profile } = await supabaseClient
+                .from('users')
+                .select('*')
+                .eq('email', session.user.email)
+                .single();
+            
+            return profile;
         } catch (e) {
-            // Quietly fail for current user check (e.g. network issue or not logged in)
             return null;
         }
     },
@@ -176,12 +242,20 @@ const Auth = {
             path.endsWith('register.html') ||
             path.endsWith('home.html') ||
             path.endsWith('admin_login.html') ||
-            path === '/';
+            path.endsWith('/') || 
+            path.endsWith('maintenance.html');
 
         // Pages that should redirect if already logged in (e.g. login/register)
         const isGuestPage = path.endsWith('login.html') ||
             path.endsWith('register.html') ||
             path.endsWith('admin_login.html');
+
+        // Check Maintenance Mode
+        const maintenance = await this.checkMaintenance();
+        if (maintenance && user?.role !== 'admin' && !path.endsWith('maintenance.html') && !path.endsWith('admin_login.html')) {
+             window.location.href = 'maintenance.html';
+             return;
+        }
 
         if (!user) {
             // Not logged in
@@ -214,9 +288,13 @@ const Auth = {
     checkExamAccess: async function (examLevel) {
         const user = await this.getCurrentUser();
         if (!user) return false;
+        
+        // Check specific access field
+        if (examLevel === 'B1' && user.accessB1) return true;
+        if (examLevel === 'B2' && user.accessB2) return true;
+        if (user.role === 'admin') return true;
 
-        // Grant access to everyone logged in
-        return true;
+        return false;
     },
 
     requireExamAccess: async function (examLevel) {
@@ -232,7 +310,12 @@ const Auth = {
             return;
         }
 
-
+        // Check Access
+        const hasAccess = await this.checkExamAccess(examLevel);
+        if (!hasAccess) {
+            alert('Sie haben keinen Zugriff auf diese Prüfung. Bitte kontaktieren Sie den Administrator.');
+            return;
+        }
 
         // If user has access, redirect to the exam page ONLY if not already there
         const examPage = examLevel === 'B1' ? 'index1.html' : 'index2.html';
@@ -259,8 +342,6 @@ const Auth = {
     // --- Auto Logout ---
 
     setupAutoLogout: function () {
-        // Only run if we think we are logged in (quick check)
-
         const settings = this.getSettings();
         const timeoutMinutes = settings.logoutTimer || 15;
         const timeoutMs = timeoutMinutes * 60 * 1000;
@@ -283,21 +364,7 @@ const Auth = {
             }, timeoutMs);
 
             this.hideWarning();
-
-            // Send ping to server to keep session alive
-            // We throttle this to not spam the server on every mousemove
-            // But for simplicity in this version, we trust the debounce of the event listener roughly
         };
-
-        // Throttled ping would be better, but we leave as is for now or just ping in interval
-        // Actually the original code pinged on every resetTimer which is on every mousemove. 
-        // That is bad. Let's fix it to only ping periodically.
-
-        if (!this._pingInterval) {
-            this._pingInterval = setInterval(() => {
-                apiFetch(API.PING).catch(() => { });
-            }, 60 * 1000); // Ping every minute
-        }
 
         ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
             document.addEventListener(evt, resetTimers);
@@ -333,9 +400,14 @@ const Auth = {
 
     checkMaintenance: async function () {
         try {
-            const response = await apiFetch(API.MAINTENANCE_STATUS);
-            const result = await response.json();
-            return result.maintenance;
+            const { data, error } = await supabaseClient
+                .from('settings')
+                .select('value')
+                .eq('key', 'maintenance_mode')
+                .single();
+            
+            if (error || !data) return false;
+            return data.value === 'true'; // Stored as string or boolean
         } catch (e) {
             return false;
         }
@@ -343,13 +415,14 @@ const Auth = {
 
     toggleMaintenance: async function (enabled) {
         try {
-            const response = await apiFetch(API.MAINTENANCE, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ enabled })
-            });
-            return await response.json();
+            const { error } = await supabaseClient
+                .from('settings')
+                .upsert({ key: 'maintenance_mode', value: enabled.toString() });
+
+            if (error) throw error;
+            return { success: true };
         } catch (e) {
+            console.error('Error toggling maintenance:', e);
             return { success: false, message: 'Server error' };
         }
     }
@@ -358,7 +431,7 @@ const Auth = {
 // Initialize on load
 Auth.init();
 
-// Theme
+// Theme (Keep existing theme logic)
 const Theme = {
     get: function () {
         return localStorage.getItem('theme') || 'light';
