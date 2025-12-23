@@ -1,9 +1,9 @@
-﻿<html lang="de"><head>
-<meta charset="utf-8"/>
+<html lang="de"><head>
+<meta charset="UTF-8"/>
 <title>Viktor teil: 2</title>
 <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #e5e5e5; background-image: radial-gradient(at 0% 0%, hsla(328, 76%, 65%, 0.7) 0px, transparent 50%), radial-gradient(at 0% 40%, hsla(15, 88%, 65%, 0.5) 0px, transparent 50%); background-attachment: fixed;
@@ -15,50 +15,103 @@
       max-width: 1200px;
       margin: 30px auto;
       padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      gap: 20px;
     }
 
     .text-section {
       flex: 1;
-      padding: 20px;
-      border-right: 1px solid #ccc;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       overflow-y: auto;
+      max-height: 85vh;
+    }
+
+    .text-section h1 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .text-section p {
+      color: #34495e;
+      line-height: 1.8;
+      font-size: 1rem;
     }
 
     .quiz-section {
       flex: 1;
-      padding: 20px;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
     .question-card {
-      background: #e9f0f7;
-      border: 1px solid #ccc;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #3498db;
       border-radius: 10px;
-      padding: 15px 20px;
+      padding: 20px;
       margin-bottom: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .question-card h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      font-weight: 600;
     }
 
     .question-card label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+      color: #34495e;
+    }
+
+    .question-card label:hover {
+      background-color: #e8f4f8;
+    }
+
+    .question-card input[type="radio"] {
+      margin-right: 10px;
       cursor: pointer;
     }
 
     button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #4a90e2;
+      padding: 12px 24px;
+      font-size: 1rem;
+      background: linear-gradient(135deg, #3498db, #2980b9);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
     }
 
     .result {
@@ -75,6 +128,20 @@
   border: 1px solid #dc3545;
 }
 
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 15px;
+      }
+
+      .text-section,
+      .quiz-section {
+        max-height: none;
+        margin-bottom: 20px;
+      }
+    }
+
+
   </style>
 </head>
 <body>
@@ -82,14 +149,14 @@
 <!-- Left: Text -->
 <div class="text-section">
 <h1>Neue Berufe</h1>
-<h3>Raumberater für harmonisches Wohnen<br/> 
-          Räume nach der chinesischen Lehre Feng – Shui zu gestalten, damit sich die Menschen wohl Fühlen – das ist der Beruf von Iris Eigenmann</h3>
-<p>Seit knapp einem Jahr bin ich nun selbstständig und bin voller Energie. So stehe ich jeden Tag mit einem Lächeln auf und gehe abends wieder mit einem Lächeln ins Bett. Die diplomierte Raumberaterin Iris Eigenmann ist von ihrem Beruf sichtlich begeistert. Da viele mit dem Wort Fengshui nichts anfangen können, bezeichnet sie sich selbst als Raumberaterin für harmonisches Wohnungen aber auch Büros und andere Arbeitsplätze so einzurichten, dass sich Menschen in diesen Räumen wohl fühlen können.</p>
-<p>Ursprünglich ist Frau Eigenmann gelernte Hochbauzeichnerin und hat Jahrelang Bauprojekte geleitet. Diese Erfahrungen mit Architektur und Wohnbau helfen ihr nun sehr bei ihrer Tätigkeit als Raumberaterin. Ihre Arbeit besteht darin, den optimalen Energiefluss eines Wohn- oder Arbeitsumfeldes zu finden. Sie macht individuelle Vorschläge für die Raumanordnung, die Farbwahl der Wände oder für die Verwendung von Baumaterialien. Ich habe alle Ideen zuerst bei mir zu Hause ausprobiert und war selbst überrascht von der positiven Wirkung, erzählt sie begeistert.</p>
-<p>Eine Raumberaterin arbeitet in der Regel folgendermaßen: Zuerst besprechen die Leute mit Frau Eigenmann, warum sie sich in ihrer Wohnung nicht wohl fühlen und wie sie ihren Wohnraum verbessen möchten. Dann bittet die Beraterin ihre Kunden, ihr einen genauen Plan der Wohnung zu schicken, auf dem sie die Möbelaufstellung und die genaue Ausrichtung des Hauses sehen kann. Daraufhin macht Frau Eigenmann einen detaillierten Wohnungsplan mit ausführlichen Erklärungen, wie man die Räume optimal einrichtet, um sich darin zufrieden zu fühlen. Für die Erstellung eines solchen Planes benötigt sie nach eigener Aussage je nach Größe der Wohnung oder des Gebäudes zwischen einem halben und einem ganzen Tag.</p>
-<p>Anschließend geht Iris Eigenmann zu den Leuten nach Hause, um die Situation vor Ort zu analysieren und Verbesserungsmöglichkeiten aufzuzeigen.</p>
-<p>Auch immer mehr Firmen suchen Rat bei einer Raumberaterin meistens dann, wenn das Unternehmen nicht mehr so erfolgreich arbeitet. Iris Eigenmann versucht dann, das Arbeitsumfeld so zu verändern, dass sich Kunden und Angestellte wohler fühlen. Das führt in den meisten Fällen dazu, dass auch die Geschäfte wieder besser gehen. Der Preis für die Raumberatung wird je nach Aufwand mit dem Kunden gemeinsam bestimmt. Das Geld aber ist für Frau Eigenmann weniger wichtig als die Möglichkeit, den Menschen zu helfen und ihre positiven Erfahrungen weiterzugeben.</p>
-<p>Das persönliche Ziel der Feng-Shui-Raumberaterin für die Zukunft ist es, vermehrt auch im sozialen Bereich zu wirken – zum Beispiel in Krankenhäusern oder Altersheimen. Sie meint, dass mit einfachen Maßnahmen dort die Lebensqualität der Menschen erheblich verbessert werden könnte.</p>
+<h3>Raumberater fu¨r harmonisches Wohnen<br/> 
+          Ra¨ume nach der chinesischen Lehre Feng – Shui zu gestalten, damit sich die Menschen wohl Fu¨hlen – das ist der Beruf von Iris Eigenmann</h3>
+<p>Seit knapp einem Jahr bin ich nun selbststa¨ndig und bin voller Energie. So stehe ich jeden Tag mit einem La¨cheln auf und gehe abends wieder mit einem La¨cheln ins Bett. Die diplomierte Raumberaterin Iris Eigenmann ist von ihrem Beruf sichtlich begeistert. Da viele mit dem Wort Fengshui nichts anfangen ko¨nnen, bezeichnet sie sich selbst als Raumberaterin fu¨r harmonisches Wohnungen aber auch Bu¨ros und andere Arbeitspla¨tze so einzurichten, dass sich Menschen in diesen Ra¨umen wohl fu¨hlen ko¨nnen.</p>
+<p>Urspru¨nglich ist Frau Eigenmann gelernte Hochbauzeichnerin und hat Jahrelang Bauprojekte geleitet. Diese Erfahrungen mit Architektur und Wohnbau helfen ihr nun sehr bei ihrer Ta¨tigkeit als Raumberaterin. Ihre Arbeit besteht darin, den optimalen Energiefluss eines Wohn- oder Arbeitsumfeldes zu finden. Sie macht individuelle Vorschla¨ge fu¨r die Raumanordnung, die Farbwahl der Wa¨nde oder fu¨r die Verwendung von Baumaterialien. Ich habe alle Ideen zuerst bei mir zu Hause ausprobiert und war selbst u¨berrascht von der positiven Wirkung, erza¨hlt sie begeistert.</p>
+<p>Eine Raumberaterin arbeitet in der Regel folgendermaßen: Zuerst besprechen die Leute mit Frau Eigenmann, warum sie sich in ihrer Wohnung nicht wohl fu¨hlen und wie sie ihren Wohnraum verbessen mo¨chten. Dann bittet die Beraterin ihre Kunden, ihr einen genauen Plan der Wohnung zu schicken, auf dem sie die Mo¨belaufstellung und die genaue Ausrichtung des Hauses sehen kann. Daraufhin macht Frau Eigenmann einen detaillierten Wohnungsplan mit ausfu¨hrlichen Erkla¨rungen, wie man die Ra¨ume optimal einrichtet, um sich darin zufrieden zu fu¨hlen. Fu¨r die Erstellung eines solchen Planes beno¨tigt sie nach eigener Aussage je nach Gro¨ße der Wohnung oder des Geba¨udes zwischen einem halben und einem ganzen Tag.</p>
+<p>Anschließend geht Iris Eigenmann zu den Leuten nach Hause, um die Situation vor Ort zu analysieren und Verbesserungsmo¨glichkeiten aufzuzeigen.</p>
+<p>Auch immer mehr Firmen suchen Rat bei einer Raumberaterin meistens dann, wenn das Unternehmen nicht mehr so erfolgreich arbeitet. Iris Eigenmann versucht dann, das Arbeitsumfeld so zu vera¨ndern, dass sich Kunden und Angestellte wohler fu¨hlen. Das fu¨hrt in den meisten Fa¨llen dazu, dass auch die Gescha¨fte wieder besser gehen. Der Preis fu¨r die Raumberatung wird je nach Aufwand mit dem Kunden gemeinsam bestimmt. Das Geld aber ist fu¨r Frau Eigenmann weniger wichtig als die Mo¨glichkeit, den Menschen zu helfen und ihre positiven Erfahrungen weiterzugeben.</p>
+<p>Das perso¨nliche Ziel der Feng-Shui-Raumberaterin fu¨r die Zukunft ist es, vermehrt auch im sozialen Bereich zu wirken – zum Beispiel in Krankenha¨usern oder Altersheimen. Sie meint, dass mit einfachen Maßnahmen dort die Lebensqualita¨t der Menschen erheblich verbessert werden ko¨nnte.</p>
 </div>
 <!-- Right: Quiz -->
 <div class="quiz-section">
@@ -101,7 +168,7 @@
 <label><input name="q1" type="radio" value="c"/> zeichnet Pläne für eine Große Baufirma.</label>
 </div>
 <div class="question-card">
-<h3>2. Als Raumberaterin kümmert sich Iris Eigenmann darum, </h3>
+<h3>2. Als Raumberaterin ku¨mmert sich Iris Eigenmann darum, </h3>
 <label><input name="q2" type="radio" value="a"/> dass sich Menschen in Wohn – und Arbeitsräumen wohler fühlen.</label>
 <label><input name="q2" type="radio" value="b"/> chinesische Möbelin Europa zu verkaufen.</label>
 <label><input name="q2" type="radio" value="c"/> Materialien für neue Bauprojekte zu entwickeln.</label>
@@ -119,7 +186,7 @@
 <label><input name="q4" type="radio" value="c"/> wollen auch ihre wirtschaftliche Lage verbessern.</label>
 </div>
 <div class="question-card">
-<h3>5.   Frau Eigenmann möchte in Zukunft </h3>
+<h3>5.   Frau Eigenmann mo¨chte in Zukunft </h3>
 <label><input name="q5" type="radio" value="a"/> als Krankenschwester arbeiten.</label>
 <label><input name="q5" type="radio" value="b"/> mit ihre Arbeit das Leben alter und kranker Menschen verbessern.</label>
 <label><input name="q5" type="radio" value="c"/> viel Geld verdienen.</label>
@@ -127,7 +194,7 @@
 <button onclick="checkAnswers()" type="button">Antworten prüfen</button>
 <div class="result" id="result"></div>
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
-<a href="../index1.html" style="text-decoration: none;">
+<a href="#" onclick="goToDashboard(event)" style="text-decoration: none;">
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
                 Zurück zur Startseite
               </div>
@@ -194,4 +261,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

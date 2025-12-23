@@ -1,5 +1,5 @@
-﻿<html lang="en"><head>
-<meta charset="utf-8"/>
+<html lang="en"><head>
+<meta charset="UTF-8"/>
 <title>Wilkommen</title>
 <style>
     body {
@@ -85,8 +85,8 @@
 <p>Wir freuen uns, Sie hier zu haben.</p>
 </div>
 <div class="container">
-<a class="button" href="../index1.html">B1</a>
-<a class="button" href="../index2.html">B2</a>
+<a class="button" href="#" onclick="goToDashboard(event)">B1</a>
+<a class="button" href="#" onclick="goToDashboard(event)">B2</a>
 </div>
 
 
@@ -99,4 +99,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

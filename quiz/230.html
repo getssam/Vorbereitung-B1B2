@@ -1,5 +1,5 @@
-﻿<html lang="de"><head>
-<meta charset="utf-8"/>
+<html lang="de"><head>
+<meta charset="UTF-8"/>
 <title>Vera teil: 1</title>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -208,7 +208,7 @@
 <button class="quiz-button secondary" onclick="resetQuiz()">
 <i class="fas fa-redo"></i> Zurücksetzen
   </button>
-<a class="quiz-button-link secondary" href="../index1.html"> <!-- Replace # with your actual home link -->
+<a class="quiz-button-link secondary" href="#" onclick="goToDashboard(event)"> <!-- Replace # with your actual home link -->
 <i class="fas fa-home"></i> Zurück zur Startseite
   </a>
 </div>
@@ -460,4 +460,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

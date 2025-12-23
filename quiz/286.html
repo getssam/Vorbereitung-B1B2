@@ -1,5 +1,5 @@
-﻿<html lang="de"><head>
-<meta charset="utf-8"/>
+<html lang="de"><head>
+<meta charset="UTF-8"/>
 <title>Lesen Teil 3</title>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <!-- Font Awesome for Icons -->
@@ -373,11 +373,11 @@
 <div class="question-text" style="margin: 0 auto; max-width: 80%;"> <!-- Adjust width as needed -->
 <h2>Tierpark Goldau<br/>
             ein Besuch, der sich lohnt!</h2>
-<p>✔ Freilaufzone<br/>
-           ✔ Abenteuerspielplatz<br/>
-           ✔ Restaurant<br/>
-           ✔ 365 Tage im Jahr offener<br/>
-           ✔ Eintritt ist für Begleitpersonen von Gruppen<br/>
+<p>? Freilaufzone<br/>
+           ? Abenteuerspielplatz<br/>
+           ? Restaurant<br/>
+           ? 365 Tage im Jahr offener<br/>
+           ? Eintritt ist für Begleitpersonen von Gruppen<br/>
             ab 12 Personen</p>
 <h5>Tel. 041-855 05 40<br/>
             www.berpark.ch</h5>
@@ -436,10 +436,10 @@
 <h1>Viking-Tours</h1>
 <h4>Flussfahrten auf der Aare</h4>
 <p>Täglich Fahrten von Mai bis Sep.<br/>
-            ✔ Abfahrt Schiff: 11 Uhr, 14 Uhr, 16 Uhr
-            ✔ Treffpunkt: Thun/Schwäbis Schiffssteg
-            ✔ Preise: 43 Franken
-            ✔ Spezialangebot: Abendfahrten (Rückkehr 23 Uhr),
+            ? Abfahrt Schiff: 11 Uhr, 14 Uhr, 16 Uhr
+            ? Treffpunkt: Thun/Schwäbis Schiffssteg
+            ? Preise: 43 Franken
+            ? Spezialangebot: Abendfahrten (Rückkehr 23 Uhr),
             Tanz an Bord, Spezialangebote für Senioren</p>
 <h4>Tel. 01 434 33 66 Fax: 01 434 33 44y<br/>
             viking@viking.ch<br/>
@@ -452,11 +452,11 @@
 <h3>Geöffnet<br/>
               Mo–Fr. 9.00–19. UM Sa 9.00–14.00 Uhr</h3>
 <h2>ANDREAS TIERWELT</h2>
-<p>✔ Vögel-Nager-Pflanzen<br/>
-            ✔ Warm- und Kaltwasserfische<br/>
-            ✔ Futter und Zubehör für alle Tierarten<br/>
-            ✔ Aquarien und Terrarien<br/>
-            ✔ Fachberatung</p>
+<p>? Vögel-Nager-Pflanzen<br/>
+            ? Warm- und Kaltwasserfische<br/>
+            ? Futter und Zubehör für alle Tierarten<br/>
+            ? Aquarien und Terrarien<br/>
+            ? Fachberatung</p>
 <h4>Kreuzgasse 14<br/>
                CH 4500 Solothurn Tel. 032 622 20 20</h4>
 </div>
@@ -483,9 +483,9 @@
 <h2>SCHWEIZER FERIENTORT</h2>
 <h1>ZERMATT</h1>
 <p>Erholung pur im Naturfreunde-Hotel Zermatt</p>
-<p>✔ Herrliche Wanderwege in den Bergen<br/>
-            ✔ Vorzügliche Küche<br/>
-            ✔ Eigener Bahnanschluss</p>
+<p>? Herrliche Wanderwege in den Bergen<br/>
+            ? Vorzügliche Küche<br/>
+            ? Eigener Bahnanschluss</p>
 <h3>NATURFREUNDE-HOTEL ZERMATT<br/>
               Tel. 0865 0854</h3>
 </div>
@@ -537,7 +537,7 @@
 <i class="fas fa-redo"></i> Zurücksetzen
     </button>
 <!-- Changed to <a> tag for navigation, href to a generic "index.html" or "#" -->
-<a class="quiz-button secondary" href="../index1.html" id="homeButton" role="button">
+<a class="quiz-button secondary" href="#" onclick="goToDashboard(event)" id="homeButton" role="button">
 <i class="fas fa-home"></i> Startseite
     </a>
 </div>
@@ -801,8 +801,8 @@
 
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML =
-      `<span class="correct-count">✅ ${correct}</span> von <span class="total-count">${scorableTotal}</span> bewertbaren Fragen richtig. | ` + 
-      `<span class="marked-wrong-count">🚫 Falsch-Antworten korrekt markiert: ${wrongMarkedCorrect}</span> von ${wrongMarkedTotal}.`;
+      `<span class="correct-count">? ${correct}</span> von <span class="total-count">${scorableTotal}</span> bewertbaren Fragen richtig. | ` + 
+      `<span class="marked-wrong-count">?? Falsch-Antworten korrekt markiert: ${wrongMarkedCorrect}</span> von ${wrongMarkedTotal}.`;
   }
 
   function resetQuiz() {
@@ -852,4 +852,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

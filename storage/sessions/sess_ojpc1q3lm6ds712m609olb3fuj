@@ -1,0 +1,1 @@
+csrf_token|s:64:"12e3cccd1866a098c5402dcdc40663482d0f74de42d98c899f401855ee294bc5";user_id|i:6;session_token|s:64:"d5d907bc74176e5b0fc5a9c8f48999db926f66adc745843f4060a342ead180b4";user|a:7:{s:2:"id";i:6;s:4:"name";s:4:"user";s:7:"surname";s:5:"admin";s:5:"email";s:17:"issamr1@gmail.com";s:4:"role";s:4:"user";s:9:"access_b1";b:1;s:9:"access_b2";b:1;}

@@ -1,5 +1,5 @@
-﻿<html lang="de"><head>
-<meta charset="utf-8"/>
+<html lang="de"><head>
+<meta charset="UTF-8"/>
 <title>Teil1</title>
 <style>
     body {
@@ -29,7 +29,7 @@
       padding: 12px;
       text-align: left;
       vertical-align: top;
-    }
+          color: #2c3e50;\n}
     th {
       background-color: #1f3655;
       color: white;
@@ -39,6 +39,10 @@
     td:first-child {
       width: 50px;
       text-align: center;
+    }
+    td:nth-child(3) {
+      color: #2c3e50;
+      font-size: 1rem;
     }
     input[type="radio"] {
       transform: scale(1.3);
@@ -77,6 +81,9 @@
   font-weight: bold;
   z-index: 9999;
 }
+      td:nth-child(3) {
+      color: #2c3e50;
+    }
   </style>
 </head>
 <body>
@@ -739,7 +746,7 @@
 <tr>
 <td><input name="q18_1" type="radio" value="richtig"/></td>
 <td><input name="q18_1" type="radio" value="falsch"/></td>
-<td>1. Sie hareō den Anrufbewlworter einer Buchhandlung.</td>
+<td>1. Sie hareo den Anrufbewlworter einer Buchhandlung.</td>
 </tr>
 <tr>
 <td><input name="q18_2" type="radio" value="richtig"/></td>
@@ -918,11 +925,11 @@
 </form>
 </div>
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
-<a href="../index2.html" style="text-decoration: none;">
+<a href="#" onclick="goToDashboard(event)" style="text-decoration: none;">
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
         Zurück zur Startseite
       </div>
-</a></div><a href="../index2.html" style="text-decoration: none;">
+</a></div><a href="#" onclick="goToDashboard(event)" style="text-decoration: none;">
 <script>
     const correctAnswers = {
       // Quiz 1
@@ -1108,4 +1115,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

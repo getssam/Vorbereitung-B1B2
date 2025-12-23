@@ -1,9 +1,9 @@
-﻿<html lang="de"><head>
-<meta charset="utf-8"/>
+<html lang="de"><head>
+<meta charset="UTF-8"/>
 <title>Ernährung</title>
 <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #e5e5e5; background-image: radial-gradient(at 0% 0%, hsla(328, 76%, 65%, 0.7) 0px, transparent 50%), radial-gradient(at 0% 40%, hsla(15, 88%, 65%, 0.5) 0px, transparent 50%); background-attachment: fixed;
@@ -15,50 +15,103 @@
       max-width: 1200px;
       margin: 30px auto;
       padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      gap: 20px;
     }
 
     .text-section {
       flex: 1;
-      padding: 20px;
-      border-right: 1px solid #ccc;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       overflow-y: auto;
+      max-height: 85vh;
+    }
+
+    .text-section h1 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .text-section p {
+      color: #34495e;
+      line-height: 1.8;
+      font-size: 1rem;
     }
 
     .quiz-section {
       flex: 1;
-      padding: 20px;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
     .question-card {
-      background: #e9f0f7;
-      border: 1px solid #ccc;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #3498db;
       border-radius: 10px;
-      padding: 15px 20px;
+      padding: 20px;
       margin-bottom: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .question-card h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      font-weight: 600;
     }
 
     .question-card label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+      color: #34495e;
+    }
+
+    .question-card label:hover {
+      background-color: #e8f4f8;
+    }
+
+    .question-card input[type="radio"] {
+      margin-right: 10px;
       cursor: pointer;
     }
 
     button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #4a90e2;
+      padding: 12px 24px;
+      font-size: 1rem;
+      background: linear-gradient(135deg, #3498db, #2980b9);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
     }
 
     .result {
@@ -86,11 +139,25 @@
   padding: 15px 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   font-size: 14px;
   font-weight: bold;
   z-index: 9999;
 }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 15px;
+      }
+
+      .text-section,
+      .quiz-section {
+        max-height: none;
+        margin-bottom: 20px;
+      }
+    }
+
 
   </style>
 </head>
@@ -145,7 +212,7 @@
 <button onclick="checkAnswers()" type="button">Antworten prüfen</button>
 <div class="result" id="result"></div>
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
-<a href="../index2.html" style="text-decoration: none;">
+<a href="#" onclick="goToDashboard(event)" style="text-decoration: none;">
 <div style="padding: 10px 20px; font-size: 16px; background-color: lab(42.45% 44.97 -83.12); color: white; border-radius: 8px; text-align: center;">
                 Zurück zur Startseite
               </div>
@@ -211,4 +278,48 @@
         });
     </script>
     
+<script>
+// Smart redirect to dashboard based on referrer or URL parameter
+function goToDashboard(event) {
+    event.preventDefault();
+    
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    
+    if (level === 'B1' || level === 'b1') {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (level === 'B2' || level === 'b2') {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Check referrer
+    const referrer = document.referrer;
+    if (referrer.includes('/b1') || referrer.includes('B1')) {
+        window.location.href = '/Vorbereitung-B1B2/b1';
+        return;
+    }
+    if (referrer.includes('/b2') || referrer.includes('B2')) {
+        window.location.href = '/Vorbereitung-B1B2/b2';
+        return;
+    }
+    
+    // Default to home
+    window.location.href = '/Vorbereitung-B1B2/home';
+}
+
+// Auto-detect and update all back buttons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const backButtons = document.querySelectorAll('a[href*="index"], a.quiz-button.secondary, a#homeButton, a#homeBtn');
+    backButtons.forEach(btn => {
+        if (btn.href && (btn.href.includes('index') || btn.textContent.includes('Startseite') || btn.textContent.includes('Zurück'))) {
+            btn.href = '#';
+            btn.onclick = goToDashboard;
+        }
+    });
+});
+</script>
 </body></html>

@@ -1,0 +1,1 @@
+csrf_token|s:64:"8259dcb184f5abb95b0e13246e9c930b9cf37a12a022592b84dead56ce6fbd5d";user_id|i:7;session_token|s:64:"04fb5c8eeb3787a6b2e9266e35620e8f11c7f7785f377e04f5e75878e51c68ad";user|a:8:{s:2:"id";i:7;s:4:"name";s:4:"abcd";s:7:"surname";s:4:"efgh";s:5:"email";s:15:"owner@gmail.com";s:4:"role";s:4:"user";s:9:"access_b1";b:1;s:9:"access_b2";b:1;s:5:"phone";s:10:"0663695745";}

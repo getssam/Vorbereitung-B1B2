@@ -1,0 +1,5 @@
+project overview :
+this project aims to be a small platform to test quizz for b1 & b2  dutch learner okay ;
+we want it to be private access for users and admin will give a user access level wheter is b1 b2 or both can set the maintenancemode and add users 
+so users can also nregister and pending admin approvals 
+we tends to use php - mysql as a solide mvc backend and users can use platform as playing lobby make it easy and smart in orders to give better visuals to users and users can see results of their tests okay;

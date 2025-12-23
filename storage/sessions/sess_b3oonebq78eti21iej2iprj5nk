@@ -1,0 +1,1 @@
+csrf_token|s:64:"c62e041c41c998368c99653f741a137fe70200e999afab056796b5f3d1d536ff";user_id|i:5;session_token|s:64:"6eb246b7061b3028fedb2b2a390a106ac35722c491a8efb5c78d632fc8ad1cf6";user|a:7:{s:2:"id";i:5;s:4:"name";s:5:"issam";s:7:"surname";s:2:"ro";s:5:"email";s:21:"issamrougui@gmail.com";s:4:"role";s:5:"admin";s:9:"access_b1";b:1;s:9:"access_b2";b:1;}

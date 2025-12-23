@@ -1,0 +1,69 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Set base directory
+    RewriteBase /Vorbereitung-B1B2/
+
+    # Redirect to HTTPS (uncomment in production)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Allow access to public directory
+    RewriteCond %{REQUEST_URI} ^/Vorbereitung-B1B2/public/
+    RewriteRule ^(.*)$ - [L]
+
+    # Allow access to existing quiz files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_URI} \.(html|css|js|png|jpg|jpeg|gif|ico|svg)$
+    RewriteRule ^(.*)$ - [L]
+
+    # Route b1 and b2 to index.php (even if directories exist)
+    # This must come BEFORE the directory check to override it
+    RewriteRule ^(b1|b2)/?$ index.php?url=$1 [QSA,L]
+
+    # Route all other requests to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect config and app directories
+<IfModule mod_alias.c>
+    RedirectMatch 403 /Vorbereitung-B1B2/config/
+    RedirectMatch 403 /Vorbereitung-B1B2/app/
+    RedirectMatch 403 /Vorbereitung-B1B2/storage/
+    RedirectMatch 403 /Vorbereitung-B1B2/database/
+    RedirectMatch 403 /Vorbereitung-B1B2/\.env
+</IfModule>
+
+# Set UTF-8 encoding for HTML files
+<IfModule mod_mime.c>
+    AddDefaultCharset UTF-8
+    AddCharset UTF-8 .html .htm .css .js
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    # Ensure UTF-8 charset for HTML files
+    <FilesMatch "\.(html|htm)$">
+        Header set Content-Type "text/html; charset=UTF-8"
+    </FilesMatch>
+</IfModule>
+
+# PHP settings
+<IfModule mod_php.c>
+    php_value session.cookie_httponly 1
+    php_value session.use_strict_mode 1
+</IfModule>
